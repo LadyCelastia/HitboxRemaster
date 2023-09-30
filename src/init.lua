@@ -915,7 +915,6 @@ Hitbox.ConstructionEnum = enum._get("ConstructionMode")
 Hitbox.BezierEnum = enum._get("BezierMode")
 
 Hitbox.new = function(Fields: {Pair<string, any>}): HitboxType
-	print("New hitbox called")
 	Fields = Fields or {}
 	HitboxSerial += 1
 	local self = setmetatable({}, Hitbox)
@@ -1039,8 +1038,9 @@ end
 function Hitbox:AddIgnore(object: Instance): boolean
 	if typeof(object) == "Instance" then
 		if object:IsA("BasePart") or object:IsA("Model") then
-			self.OverlapParams.FilterDescendantsInstances = self.OverlapParams.FilterDescendantsInstances or {}
-			table.insert(self.OverlapParams.FilterDescendantsInstances, object)
+			local oldTable = self.OverlapParams.FilterDescendantsInstances or {}
+			table.insert(oldTable, object)
+			self.OverlapParams.FilterDescendantsInstances = oldTable
 			return true
 		end
 	end
@@ -1092,7 +1092,6 @@ function Hitbox:IsBackstab(Part: BasePart, Character: Model): boolean
 end
 
 function Hitbox:Destroy(): ()
-	--print("Destroy called")
 	self._Destroying = true
 	self:Deactivate()
 	self.Hit:DisconnectAll()
@@ -1651,6 +1650,26 @@ function Module:CharacterListToPlayerList(CharacterList: {Model}): {Player}
 		end
 	end
 	return PlayerList
+end
+
+function Module:_PrintSerial(): ()
+	print(concatPrint("The current highest serial is " .. HitboxSerial .. "."))
+end
+
+function Module:_PrintActiveHitboxes(): ()
+	print(concatPrint("There are " .. #ActiveHitboxes .. " hitboxes."))
+end
+
+function Module:_PrintActiveZones(): ()
+	print(concatPrint("There are " .. #ActiveZones .. " hitboxes."))
+end
+
+function Module:_GetActiveHitboxes(): {Pair<number, HitboxType>}
+	return ActiveHitboxes
+end
+
+function Module:_GetActiveZones(): {Pair<number, ZoneType>}
+	return ActiveZones
 end
 
 return Module
