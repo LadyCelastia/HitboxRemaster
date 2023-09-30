@@ -983,7 +983,7 @@ end
 function Hitbox:Unvisualize(doNotWarn: boolean?): ()
 	if self._Visual == nil then
 		if doNotWarn ~= true then
-			--warn(concatPrint("Hitbox is not visualizing."))
+			warn(concatPrint("Hitbox is not visualizing."))
 		end
 		return false
 	else
@@ -1097,7 +1097,7 @@ function Hitbox:Destroy(): ()
 	self.Hit:DisconnectAll()
 	self.Hit:Destroy()
 	self.Trajectory:Destroy()
-	self:Unvisualize()
+	self:Unvisualize(true)
 	ActiveHitboxes[self.Serial] = nil
 	self = {State = enum.StateEnum.Dead}
 end
