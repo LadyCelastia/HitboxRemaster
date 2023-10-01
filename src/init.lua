@@ -162,6 +162,7 @@ export type ZoneType = {
 	_CharactersInside: {Model},
 	_PlayersInside: {Model},
 	_Destroying: boolean,
+	_FirstQuery: boolean,
 
 	new: (Fields: Pair<string, any>) -> (ZoneType),
 	CharacterResolutionEnum: enumPair<string>,
@@ -194,7 +195,9 @@ export type ZoneType = {
 	GetPlayersInside: (PartList: {BasePart}?) -> ({Model}),
 	Activate: () -> (),
 	Deactivate: () -> (),
-	Destroy: () -> ()
+	Destroy: () -> (),
+	TranslateToMetafunction: (PartList: {BasePart}) -> ({Pair<string, any>}),
+	AddMemberBulk: (partList: {BasePart}) -> ()
 }
 
 --[[
@@ -205,7 +208,7 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local Debris = game:GetService("Debris")
-local DebugMode = true
+local DebugMode = false
 local HitboxSerial = 0
 local ActiveHitboxes = {}
 local ActiveZones = {}
@@ -282,7 +285,18 @@ local function FindHighestIndex(Table: {any}): number
 	return HighestIndex
 end
 
--- Compare the values of two any-pair tables, return an ipair table of exclusive values
+-- Get total entries of an any-pair table
+local function GetTotalEntries(Table: {any}): number
+	local num = 0
+	for i,v in pairs(Table) do
+		if i ~= nil and v ~= nil then
+			num += 1
+		end
+	end
+	return num
+end
+
+-- Compare the values of two any-pair tables, return two ipair tables of exclusive values
 local function CompareTableValues(Table1: {any}, Table2: {any}): {any} & {any}
 	local Table1Exclusives = {}
 	for _,v in pairs(Table1) do
@@ -294,33 +308,25 @@ local function CompareTableValues(Table1: {any}, Table2: {any}): {any} & {any}
 			end
 		end
 		if IsInTable == false then
-			Table1Exclusives[v] = true
+			table.insert(Table1Exclusives, v)
 		end
 	end
 	local Table2Exclusives = {}
 	for _,v in pairs(Table2) do
-		if Table1Exclusives[v] == nil then
+		if table.find(Table1Exclusives, v) == nil then
 			local IsInTable = false
-			for _,v2 in pairs(Table2) do
+			for _,v2 in pairs(Table1) do
 				if v == v2 then
 					IsInTable = true
 					break
 				end
 			end
 			if IsInTable == false then
-				Table2Exclusives[v] = true
+				table.insert(Table2Exclusives, v)
 			end
 		end
 	end
-	local ReturnTable1 = {}
-	for i,_ in pairs(Table1Exclusives) do
-		table.insert(ReturnTable1, i)
-	end
-	local ReturnTable2 = {}
-	for i,_ in pairs(Table2Exclusives) do
-		table.insert(ReturnTable2, i)
-	end
-	return ReturnTable1, ReturnTable2
+	return Table1Exclusives, Table2Exclusives
 end
 
 -- Check if method/variable is private
@@ -562,29 +568,36 @@ local function MainRunner(_, deltaTime: number): ()
 				for _,v in ipairs(XLastPart) do
 					self.PartLeft:Fire(v)
 				end
-				for _,v in ipairs(XCurrentPart) do
-					self.PartEntered:Fire(v)
+				if self._FirstQuery == false then
+					for _,v in ipairs(XCurrentPart) do
+						self.PartEntered:Fire(v)
+					end
 				end
 
 				local XLastCharacter, XCurrentCharacter = CompareTableValues(self._CharactersInside, CurrentCharacterList)
 				for _,v in ipairs(XLastCharacter) do
 					self.CharacterLeft:Fire(v)
 				end
-				for _,v in ipairs(XCurrentCharacter) do
-					self.CharacterEntered:Fire(v)
+				if self._FirstQuery == false then
+				    for _,v in ipairs(XCurrentCharacter) do
+					    self.CharacterEntered:Fire(v)
+					end
 				end
 
 				local XLastPlayer, XCurrentPlayer = CompareTableValues(self._PlayersInside, CurrentPlayerList)
 				for _,v in ipairs(XLastPlayer) do
 					self.PlayerLeft:Fire(v)
 				end
-				for _,v in ipairs(XCurrentPlayer) do
-					self.PlayerEntered:Fire(v)
+				if self._FirstQuery == false then
+				    for _,v in ipairs(XCurrentPlayer) do
+						self.PlayerEntered:Fire(v)
+					end
 				end
 
 				self._PartsInside = CurrentPartList
 				self._CharactersInside = CurrentCharacterList
 				self._PlayersInside = CurrentPlayerList
+				self._FirstQuery = false
 			end
 		end
 	end
@@ -938,10 +951,10 @@ Hitbox.new = function(Fields: {Pair<string, any>}): HitboxType
 	self.Orientation = Fields["Orientation"]
 	self.CopyCFrame = Fields["CopyCFrame"]
 	self.OverlapParams = OverlapParams.new()
-	self.OverlapParams.FilterType = Enum.RaycastFilterType.Exclude
-	self.OverlapParams.FilterDescendantsInstances = {}
-	self.OverlapParams.RespectCanCollide = false
-	self.OverlapParams.MaxParts = 0
+	self.OverlapParams.FilterType = Fields["FilterType"] or Enum.RaycastFilterType.Exclude
+	self.OverlapParams.FilterDescendantsInstances = Fields["FilterDescendantsInstances"] or {}
+	self.OverlapParams.RespectCanCollide = Fields["RespectCanCollide"] or false
+	self.OverlapParams.MaxParts = Fields["MaxParts"] or 0
 	self.Active = false
 	self.State = enum.StateEnum.Paused
 
@@ -983,7 +996,7 @@ end
 function Hitbox:Unvisualize(doNotWarn: boolean?): ()
 	if self._Visual == nil then
 		if doNotWarn ~= true then
-			warn(concatPrint("Hitbox is not visualizing."))
+			--warn(concatPrint("Hitbox is not visualizing."))
 		end
 		return false
 	else
@@ -1097,7 +1110,7 @@ function Hitbox:Destroy(): ()
 	self.Hit:DisconnectAll()
 	self.Hit:Destroy()
 	self.Trajectory:Destroy()
-	self:Unvisualize(true)
+	self:Unvisualize()
 	ActiveHitboxes[self.Serial] = nil
 	self = {State = enum.StateEnum.Dead}
 end
@@ -1114,6 +1127,11 @@ Metatable.__index = function(self, index)
 		return self._Members[index]
 	end
 end
+local ConnectionsMetatable = {
+	__len = function(self)
+		return GetTotalEntries(self)
+	end,
+}
 
 Metatable.new = function(Members: {any}?): MetatableType
 	local self = setmetatable({}, Metatable)
@@ -1125,7 +1143,7 @@ end
 function Metatable:_CleanUp(): ()
 	local CullingList = {}
 	for i,v in ipairs(self._Members) do
-		if v.Instance == nil or #v.Connections < 1 or v.Instance.Parent == nil then
+		if v.Instance == nil or GetTotalEntries(v.Connections) < 1 or v.Instance.Parent == nil then
 			for _,v2 in pairs(v.Connections) do
 				if typeof(v2) == "RBXScriptConnection" then
 					v2:Disconnect()
@@ -1145,7 +1163,7 @@ function Metatable:_Add(Value: Instance, Metafunctions: Pair<string, (any)>?): (
 			Connections[i] = Value[i]:Connect(v)
 		end
 	end
-	table.insert(self._Members, {Instance = Value, Connections = Connections})
+	table.insert(self._Members, {Instance = Value, Connections = setmetatable(Connections, ConnectionsMetatable)})
 end
 
 function Metatable:_Remove(Value: Instance): ()
@@ -1237,7 +1255,7 @@ ZoneComponent.new = function(Fields: Pair<string, any>?): ZoneComponentType
 	local self = setmetatable({}, ZoneComponent)
 
 	-- Private variables
-	self._Part = nil
+	self._Part = Fields["_Part"] or nil
 	self._State = enum.StateEnum.Active
 
 	-- Public variables
@@ -1255,6 +1273,9 @@ ZoneComponent.new = function(Fields: Pair<string, any>?): ZoneComponentType
 end
 
 function ZoneComponent:_NewPart(): ()
+	if self._Part == nil or self._Part.Parent == nil then
+		self._Part = Instance.new("Part")
+	end
 	self._Part.Shape = self.Shape
 	self._Part.Size = self.Size
 	self._Part.CFrame = self.CFrame
@@ -1270,9 +1291,6 @@ end
 function ZoneComponent:Query(QueryType: string, Params: OverlapParams): {BasePart}
 	Params = Params or OverlapParams.new()
 	if QueryType == enum.QueryType.Bounds then
-		if self._Part ~= nil then
-			self._Part:Destroy()
-		end
 		if self.Shape == Enum.PartType.Block then
 			return workspace:GetPartBoundsInBox(self.CFrame, self.Size, Params)
 		elseif self.Shape == Enum.PartType.Ball then
@@ -1282,8 +1300,15 @@ function ZoneComponent:Query(QueryType: string, Params: OverlapParams): {BasePar
 		if self._Part == nil then
 			self:_NewPart()
 		elseif self._Part.CFrame ~= self.CFrame or self._Part.Size ~= self.Size or self._Part.Shape ~= self.Shape then
-			self._Part:Destroy()
-			self:_NewPart()
+			if self._Part.Parent == ZoneFolder then
+				self._Part.CFrame = self.CFrame
+				self._Part.Size = self.Size
+				self._Part.Shape = self.Shape
+			else
+				self.CFrame = self._Part.CFrame
+				self.Size = self._Part.Size
+				self.Shape = self._Part.Shape
+			end
 		end
 		return workspace:GetPartsInPart(self._Part, Params)
 	end
@@ -1366,6 +1391,7 @@ Zone.new = function(Fields: Pair<string, any>): ZoneType
 	self._PlayersInside = {}
 	self._PartsInside = {}
 	self._Destroying = false
+	self._FirstQuery = true
 
 	-- Public variables
 	self.CharacterEntered = Signal.new()
@@ -1380,10 +1406,10 @@ Zone.new = function(Fields: Pair<string, any>): ZoneType
 	self.QueryType = Fields["QueryType"] or enum.QueryType.Bounds
 	self.Rate = Fields["Rate"] or 10 -- How many checks per second
 	self.OverlapParams = OverlapParams.new()
-	self.OverlapParams.FilterType = Enum.RaycastFilterType.Exclude
-	self.OverlapParams.FilterDescendantsInstances = {}
-	self.OverlapParams.RespectCanCollide = false
-	self.OverlapParams.MaxParts = 0
+	self.OverlapParams.FilterType = Fields["FilterType"] or Enum.RaycastFilterType.Exclude
+	self.OverlapParams.FilterDescendantsInstances = Fields["FilterDescendantsInstances"] or {}
+	self.OverlapParams.RespectCanCollide = Fields["RespectCanCollide"] or false
+	self.OverlapParams.MaxParts = Fields["MaxParts"] or 0
 	self.Active = Fields["Active"] or false
 	if self.Active == true then
 		self.State = enum.StateEnum.Active
@@ -1391,13 +1417,15 @@ Zone.new = function(Fields: Pair<string, any>): ZoneType
 		self.State = enum.StateEnum.Paused
 	end
 
-	for _,v in ipairs(self._MemberParts) do
-		if typeof(v) == "Instance" and v:IsA("BasePart") then
-			table.insert(self._MemberComponents, ZoneComponent.new({
-				["Shape"] = v.Shape,
-				["CFrame"] = v.CFrame,
-				["Size"] = v.Size
-			}))
+	for _,v in ipairs(self._MemberParts._Members) do
+		if typeof(v.Instance) == "Instance" and v.Instance:IsA("BasePart") then
+			local newComponent = ZoneComponent.new({
+				["Shape"] = v.Instance.Shape,
+				["CFrame"] = v.Instance.CFrame,
+				["Size"] = v.Instance.Size,
+				["_Part"] = v.Instance
+			})
+			table.insert(self._MemberComponents, newComponent)
 		end
 	end
 
@@ -1420,7 +1448,7 @@ function Zone:Update(): ()
 			if i.Parent == nil then
 				v:Destroy()
 				self._MemberComponents[i] = nil
-			elseif self._MemberParts:_IsMember(v) == false then
+			elseif self._MemberParts:_IsMember(v._Part) == false then
 				v:Destroy()
 				self._MemberComponents[i] = nil
 			else
@@ -1435,7 +1463,8 @@ function Zone:Update(): ()
 			self._MemberComponents[v.Instance] = ZoneComponent.new({
 				["Shape"] = v.Instance.Shape,
 				["CFrame"] = v.Instance.CFrame,
-				["Size"] = v.Instance.Size
+				["Size"] = v.Instance.Size,
+				["_Part"] = v.Instance
 			})
 		end
 	end
@@ -1448,18 +1477,40 @@ end
 
 function Zone:AddMember(part: BasePart, Metafunctions: Pair<string, (any)>?): ()
 	if self._MemberParts:_IsMember(part) == false then
+		Metafunctions = Metafunctions or {}
 		Metafunctions["Destroying"] = function()
+			Metafunctions = Metafunctions or {}
 			task.wait()
 			self._MemberParts:_CleanUp()
 			task.wait()
 		end
 		self._MemberParts:_Add(part, Metafunctions)
+		self:Update()
 	end
+end
+
+function Zone:AddMemberBulk(partList: {BasePart}): ()
+	for _,v in ipairs(partList) do
+		self:AddMember(v)
+	end
+end
+
+function Zone:TranslateToMetafunction(PartList: {BasePart}): {Pair<string, any>}
+	local returnTable = {}
+	for _,v in ipairs(PartList) do
+		table.insert(returnTable, {Instance = v, Connections = {Destroying = function()
+			task.wait()
+			self._MemberParts:_CleanUp()
+			task.wait()
+		end}})
+	end
+	return returnTable
 end
 
 function Zone:RemoveMember(part: BasePart): ()
 	if self._MemberParts:_IsMember(part) == true then
 		self._MemberParts:_Remove(part)
+		self:Update()
 	end
 end
 
@@ -1467,6 +1518,7 @@ function Zone:AddComponent(Component: ZoneComponentType): number?
 	if typeof(Component) == "table" and Component.Shape ~= nil and Component.CFrame ~= nil and Component.Size ~= nil then
 		local index = FindHighestIndex(self._MemberComponents) + 1
 		self._MemberComponents[index] = Component
+		self:Update()
 		return index
 	end
 	return nil
@@ -1582,6 +1634,7 @@ function Zone:GetPlayersInside(PartList: {BasePart}?): {Model}
 end
 
 function Zone:Activate(): ()
+	self:Update()
 	self.Active = true
 	self.State = enum.StateEnum.Active
 end
