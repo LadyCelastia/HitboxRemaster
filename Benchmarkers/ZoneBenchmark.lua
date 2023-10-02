@@ -57,7 +57,7 @@ local function bulkBenchmark(cycles, func)
 	local avg = 0
 	for i,v in ipairs(timeList) do
 		if i ~= #timeList then
-			avg = avg + (timeList[i + 1] - timeList[i]) -- 0.3 23 23.2: 0.3 + (23.2 - 23) = 0.3 + 0.2
+			avg = avg + (timeList[i + 1] - timeList[i])
 			if i ~= 1 then
 				avg /= 2
 			end
