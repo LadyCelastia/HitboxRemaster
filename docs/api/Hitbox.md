@@ -27,27 +27,27 @@ Create a new Hitbox object. Fields are optional.
 ```lua
 Hitbox.ShapeEnum -- {string: string}
 ```
-A mutable copy of `enum.Shape`. Includes `ShapeEnum.Box` and `ShapeEnum.Sphere`.
+An immutable copy of `enum.Shape`. Includes `ShapeEnum.Box` and `ShapeEnum.Sphere`.
 ### Hitbox.ModeEnum
 ```lua
 Hitbox.ModeEnum -- {string: string}
 ```
-A mutable copy of `enum.HitboxMode`. Includes `ModeEnum.None`, `ModeEnum.Attachment`, `ModeEnum.Linear`, `ModeEnum.Bezier`, `ModeEnum.Orientation` and `ModeEnum.Copying`
+An immutable copy of `enum.HitboxMode`. Includes `ModeEnum.None`, `ModeEnum.Attachment`, `ModeEnum.Linear`, `ModeEnum.Bezier`, `ModeEnum.Orientation` and `ModeEnum.Copying`
 ### Hitbox.StateEnum
 ```lua
 Hitbox.StateEnum -- {string: string}
 ```
-A mutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
+An immutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
 ### Hitbox.ConstructionEnum
 ```lua
 Hitbox.ConstructionEnum -- {string: string}
 ```
-A mutable copy of `enum.ConstructionMode`. Includes `ConstructionEnum.None`, `ConstructionEnum.Linear` and `ConstructionEnum.Bezier`.
+An immutable copy of `enum.ConstructionMode`. Includes `ConstructionEnum.None`, `ConstructionEnum.Linear` and `ConstructionEnum.Bezier`.
 ### Hitbox.BezierEnum
 ```lua
 Hitbox.BezierEnum -- {string: string}
 ```
-A mutable copy of `enum.BezierMode`. Includes `BezierEnum.Quadratic` and `BezierEnum.Cubic`.
+An immutable copy of `enum.BezierMode`. Includes `BezierEnum.Quadratic` and `BezierEnum.Cubic`.
 ### Hitbox.Serial
 ```lua
 Hitbox.Serial -- number
