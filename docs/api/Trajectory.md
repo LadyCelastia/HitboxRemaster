@@ -54,12 +54,12 @@ Trajectory._Completion -- number
 A normalized number which tracks how close the Hitbox is to the end of the path only if the `ConstructionMode` is `Bezier`.
 ### Trajectory._Points
 ```lua
-Trajectory._Points -- {
-                        Start = Vector3.new(),
-                        Control1 = Vector3.new(),
-                        Control2 = Vector3.new() or nil,
-                        End = Vector3.new()
-                      }
+Trajectory._Points --[[ {
+                          Start = Vector3.new(),
+                          Control1 = Vector3.new(),
+                          Control2 = Vector3.new() or nil,
+                          End = Vector3.new()
+                        } --]]
 ```
 The stored BezierPoints from `Trajectory:Construct()`.
 ### Trajectory:_GetBezierMode()
