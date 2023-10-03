@@ -6,7 +6,7 @@ A member class of Hitbox and Zone. Also returned by `Module.newSignal()`.
 ```lua
 ScriptSignal.StateEnum -- string
 ```
-A mutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
+An immutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
 ### ScriptSignal:Connect(func: function, connectImmediately: boolean?)
 ```lua
 local Connection = ScriptSignal:Connect(function()
@@ -64,3 +64,4 @@ The current state of the ScriptSignal. Can be `Active`, `Paused` or `Dead`. If t
 ScriptSignal._ActiveRunner -- ConnectionRunner
 ```
 The active ConnectionRunner middleware of the ScriptSignal. **WARNING: ConnectionRunner is intended to be completely private. You should not perform any operation on it.**
+The main enum is intended to be completely private. You are not meant to access it.
