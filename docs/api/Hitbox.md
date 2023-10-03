@@ -198,11 +198,12 @@ Hitbox:Destroy()
 Immediately clean and garbage collect Hitbox and all its children. Hitbox should be dereferenced after this operation.
 
 ## Private
+> Note: Private variables, methods and functions should not be used unless you know what you're doing.
 ### Hitbox._Attachment
 ```lua
 Hitbox._Attachment -- Attachment or nil
 ```
-Internal store for the Hitbox's Attachment, if one exists.
+Internal store for the Hitbox's Attachment, if one exists. **Note: You should use `Hitbox:ChangeAttachment(attachment)` instead.**
 ### Hitbox._CurrentFrame
 ```lua
 Hitbox._CurrentFrame -- number
