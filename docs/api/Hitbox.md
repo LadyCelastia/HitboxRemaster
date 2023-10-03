@@ -226,4 +226,3 @@ Hitbox._Destroying -- boolean
 Whether the Hitbox is being garbage collected currently or not. **WARNINNG: Readonly. The Hitbox should be dereferenced if this value is `true`.**
 
 **The main enum is intended to be completely private. You are not meant to access it.**
-**The main enum is intended to be completely private. You are not meant to access it.**
