@@ -37,6 +37,7 @@ Trajectory:Deconstruct()
 Deconstruct any constructed path and sets `Trajectory.ConstructionMode` to `None`.
 
 ## Private
+> Note: Private variables, methods and functions should not be used unless you know what you're doing.
 ### Trajectory._DirectionalVector
 ```lua
 Trajectory._DirectionVector -- Vector3 or nil
