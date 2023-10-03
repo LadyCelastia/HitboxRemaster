@@ -3,6 +3,7 @@ HitboxRemaster is a stand-alone ModuleScript that provides easy and performant d
 
 Why HitboxRemaster?
 - **Easy to use** - Clear and concise class API, ready for simple operations in just a few lines.
+- **Type-safe** - Extensively typed. Safe to use in a strict-typechecking environment.
 - **Powerful** - Libraries like Trajectory and Metafunctions to enable advanced use-cases.
 - **Customizable** - Customize the behavior of individual Hitboxes and Zones with properties and methods.
 - **Performant** - Blazingly-fast to run and use. (Details in (root)/Benchmark)
