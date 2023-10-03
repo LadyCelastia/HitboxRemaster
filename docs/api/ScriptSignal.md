@@ -53,6 +53,7 @@ ScriptSignal:Destroy()
 Immediately clean and garbage collect ScriptSignal and all its children. ScriptSignal should be dereferenced after this operation.
 
 ## Private
+> Note: Private variables, methods and functions should not be used unless you know what you're doing.
 ### ScriptSignal._State
 ```lua
 ScriptSignal._State -- string
