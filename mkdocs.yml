@@ -1,0 +1,32 @@
+site_name: HitboxRemaster
+site_url: https://ladycelastia.github.io/HitboxRemaster/
+repo_name: LadyCelastia/HitboxRemaster
+repo_url: https://github.com/LadyCelastia/HitboxRemaster
+
+theme:
+  icon:
+    logo: material/database
+    repo: fontawesome/brands/git-alt
+  name: material
+  favicon: images/favicon.png
+  palette:
+    primary: "Deep Purple"
+    accent: "Deep Purple"
+
+nav:
+  - Home: index.md
+  - Examples:
+    - Hitbox: examples/HitboxExample.md
+    - Zone: examples/ZoneExample.md
+  - API:
+    - Hitbox: api/Hitbox.md
+    - Trajectory: api/Trajectory.md
+    - Zone: api/Zone.md
+    - ZoneComponent: api/ZoneComponent.md
+    - ScriptSignal: api/ScriptSignal.md
+    - ScriptConnection: api/ScriptConnection.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
