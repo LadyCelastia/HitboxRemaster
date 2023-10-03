@@ -1,15 +1,15 @@
 # ScriptConnection
-A class returned by ScriptSignal:Connect() and ScriptSignal:Once()
+A class returned by `ScriptSignal:Connect()` and `ScriptSignal:Once()`.
 
 ## Public
 ### ScriptConnection.StateEnum
 ``` lua
 ScriptConnection.StateEnum -- {string: string}
 ```
-A mutable copy of enum.StateEnum. Includes StateEnum.Paused, StateEnum.Active and StateEnum.Dead.
+A mutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
 ### ScriptConnection:GetIdentifier()
 ``` lua
-ScriptConnection:GetIdentifier() -> string
+local identifier = ScriptConnection:GetIdentifier() -> string
 ```
 Return the ScriptConnection's unique identifier as a string.
 ### ScriptConnection:Disconnect()
