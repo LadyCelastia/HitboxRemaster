@@ -18,4 +18,7 @@ If anything is missing or broken, [file an issue on github](https://github.com/L
 Both Studio and VSCode:
 Copy the code of [HitboxRemaster](https://github.com/LadyCelastia/HitboxRemaster/blob/main/src/init.lua) into a ModuleScript, then require the ModuleScript on the Script or LocalScript you want to use it in.
 
+roblox-ts:
+gg
+
 Read the Examples page for a quickstart guide. Alternatively, you can read the API page for a more in-depth guide.
