@@ -55,3 +55,5 @@ The function that will be fired when the ScriptConnection is fired.
 ScriptConnection._Fire(...)
 ```
 An internal function to fire the ScriptConnection. Passes the arguments to the fired function.
+
+**The main enum is intended to be completely private. You are not meant to access it.**
