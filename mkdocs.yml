@@ -1,7 +1,7 @@
 site_name: HitboxRemaster
-site_url: https://ladycelastia.github.io/HitboxRemaster/
+site_url: "https://ladycelastia.github.io/HitboxRemaster"
 repo_name: LadyCelastia/HitboxRemaster
-repo_url: https://github.com/LadyCelastia/HitboxRemaster
+repo_url: "https://github.com/LadyCelastia/HitboxRemaster"
 
 theme:
   icon:
