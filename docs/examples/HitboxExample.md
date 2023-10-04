@@ -25,6 +25,7 @@ Tool.Activated:Connect(function()
             Humanoid:TakeDamage(10)
         end
     end)
+    Hitbox:Activate()
 end)
 ```
 **Note: Hitbox can also be used on client.**
