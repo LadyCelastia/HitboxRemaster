@@ -1,7 +1,8 @@
 # Home
 HitboxRemaster is a stand-alone ModuleScript that provides easy and performant dynamic Hitboxes and static Zones.
 
-Why HitboxRemaster?
+*Why HitboxRemaster?*
+
 - **Easy to use** - Clear and concise class API, ready for simple operations in just a few lines.
 - **Type-safe** - Extensively typed. Safe to use in a strict-typechecking environment.
 - **Powerful** - Libraries like Trajectory and Metafunctions to enable advanced use-cases.
@@ -16,11 +17,15 @@ If anything is missing or broken, [file an issue on github](https://github.com/L
 
 # Installation
 Both Studio and VSCode:
+
 Copy the code of [HitboxRemaster](https://github.com/LadyCelastia/HitboxRemaster/blob/main/src/init.lua) into a ModuleScript, then require the ModuleScript on the Script or LocalScript you want to use it in.
 
 roblox-ts:
+
 gg
 
 
 
 Read the Examples page for a quickstart guide. Alternatively, you can read the API page for a more in-depth guide.
+
+You are free to use and modify HitboxRemaster, for personal or commercial use, with or without credit (though some credit would be nice <3). However, you cannot claim that you made HitboxRemaster.
