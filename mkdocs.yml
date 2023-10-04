@@ -10,14 +10,13 @@ theme:
   features:
     - navigation.tabs
   icon:
-    logo: https://user-images.githubusercontent.com/51117782/104590568-71724f80-5663-11eb-9bc1-344fc2a4193c.png
-    favicon: https://user-images.githubusercontent.com/51117782/113474423-cefa8900-9467-11eb-8678-d69cbb0b3966.png
+    logo: material/database
+    repo: fontawesome/brands/git-alt
   name: material
   features:
     - navigation.tabs
-    #repo: fontawesome/brands/git-alt
   name: material
-  favicon: https://user-images.githubusercontent.com/51117782/113474423-cefa8900-9467-11eb-8678-d69cbb0b3966.png
+  favicon: images/favicon.png
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
