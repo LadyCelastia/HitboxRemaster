@@ -22,7 +22,7 @@ theme:
   features:
     - navigation.tabs
   name: material
-  favicon: images/favicon.png
+  favicon: fontawesome/solid/code
   palette:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
