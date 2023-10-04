@@ -16,7 +16,7 @@ theme:
     - content.code.copy
   language: en
   icon:
-    logo: material/database
+    logo: fontawesome/solid/code
     repo: fontawesome/brands/git-alt
   name: material
   features:
@@ -59,3 +59,12 @@ markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/git-alt
+      link: https://github.com/LadyCelastia
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@celastia6157
+    - icon: fontawesome/solid/r
+      link: https://www.roblox.com/users/171260663/profile
