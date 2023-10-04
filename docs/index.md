@@ -11,14 +11,14 @@ HitboxRemaster is a stand-alone ModuleScript that provides easy and performant d
 - **Memory-proof** - Automatic garbage-collect operations. Manual garbage-collect can be initiated on every class with simple methods.
 - **Replication** - Fully usable on both server and client. (**WARNING:** The Hitbox and Zone serials may overlap across server and client. You need to handle such scenarios yourself)
 
-If anything is missing or broken, [file an issue on github](https://github.com/LadyCelastia/HitboxRemaster/issues)
+If anything is missing or broken, [file an issue on github](https://github.com/LadyCelastia/HitboxRemaster/issues) or message me on discord (lady_celestia).
 
 > **Disclaimer**: HitboxRemaster is not thoroughly tested in a production environment yet. Production-stability is not guaranteed, although any issue found will be fixed.
 
 # Installation
 Both Studio and VSCode:
 
-Copy the code of [HitboxRemaster](https://github.com/LadyCelastia/HitboxRemaster/blob/main/src/init.lua) into a ModuleScript, then require the ModuleScript on the Script or LocalScript you want to use it in.
+Copy the [code of HitboxRemaster](https://github.com/LadyCelastia/HitboxRemaster/blob/main/src/init.lua) into a ModuleScript, then require the ModuleScript on the Script or LocalScript you want to use it in.
 
 roblox-ts:
 
