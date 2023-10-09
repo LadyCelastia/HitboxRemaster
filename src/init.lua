@@ -603,17 +603,19 @@ local function MainRunner(_, deltaTime: number): ()
 	end
 end
 local RunnerConnection = RunService.Stepped:Connect(MainRunner)
-game:BindToClose(function()
-	RunnerConnection:Disconnect()
-	for _,v in pairs(ActiveHitboxes) do
-		v:Destroy()
-	end
-	for _,v in pairs(ActiveZones) do
-		v:Destroy()
-	end
-	ActiveHitboxes = {}
-	ActiveZones = {}
-end)
+if RunService:IsServer() == true and RunService:IsStudio() == false then
+	game:BindToClose(function()
+		RunnerConnection:Disconnect()
+		for _,v in pairs(ActiveHitboxes) do
+			v:Destroy()
+		end
+		for _,v in pairs(ActiveZones) do
+			v:Destroy()
+		end
+		ActiveHitboxes = {}
+		ActiveZones = {}
+	end)
+end
 
 --[[
     @class Enum
@@ -1034,7 +1036,7 @@ function Hitbox:GetCurrentMode(): string
 	elseif self.Orientation ~= nil and self.Orientation ~= Vector3.new(0, 0, 0) then
 		return enum.HitboxMode.Orientation
 	elseif self.CopyCFrame ~= nil then
-		return enum.HitboxMode.CopyCFrame
+		return enum.HitboxMode.Copying
 	else
 		return enum.HitboxMode.None
 	end
