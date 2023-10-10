@@ -1093,20 +1093,22 @@ function Hitbox:RemoveIgnore(object: Instance): number
 	return 0
 end
 
-function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle): boolean
+function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?): boolean
+	Margin = Margin or 0.2
 	if DataBundle.Radius > 100 or DataBundle.Size.X > 50 or DataBundle.Size.Y > 50 or DataBundle.Size.Z > 50 then
 		warn(concatPrint("Hitbox is too large to support Hitbox:IsHitboxBackstab(). (Maximum 50 magnitude per-axis)"))
 		return false
-	elseif CFrame.new(DataBundle.Position):inverse() * Part.CFrame < 0 then
+	elseif DataBundle.Position:Cross(Part.Position) >= math.abs(1 - Margin) then
 		return true
 	end
 	return false
 end
 
-function Hitbox:IsBackstab(Part: BasePart, Character: Model): boolean
+function Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?): boolean
+	Margin = Margin or 0.2
 	local root: BasePart = Character:FindFirstChild("HumanoidRootPart")
 	if root then
-		if root.CFrame:inverse() * Part.CFrame < 0 then
+		if root.Position:Cross(Part.Position) >= math.abs(1 - Margin) and math.acos(root.CFrame.LookVector:Dot((Part.Position - root.Position).Unit)) >= (math.pi / 2) then
 			return true
 		end
 	end
