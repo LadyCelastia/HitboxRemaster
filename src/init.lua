@@ -694,7 +694,13 @@ end
 
 function Connection:_Fire(...): ()
 	if self._Connected == true then
-		coroutine.wrap(self._Function)(...)
+		local parser = {...}
+		coroutine.wrap(function()
+			local success, err = self._Function(table.unpack(parser))
+			if success == false then
+				error(concatPrint("Function attached to ScriptConnection " .. self._Identifier .. " ran into an error: " .. err), getStackLevel())
+			end
+		end)
 		if self._Once == true then
 			self:Disconnect()
 		end
