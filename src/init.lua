@@ -470,14 +470,24 @@ local function HitReg(self: HitboxType, deltaTime: number): {BasePart}
 	if self.Pierce > 0 then
 		local result: {BasePart} = {}
 		if self.Shape == "Sphere" then
-			result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {}
+			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
+				self.Position = self.CopyCFrame.Position
+				self.Size = self.CopyCFrame.Size
+				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
+				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {} 
+			elseif typeof(self.Orientation) == "Vector3" then
+				result = workspace:GetPartBoundsInRadius((CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z))).Position, self.Radius, self.OverlapParams) or {}
+			else
+				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {}
+			end
 		elseif self.Shape == "Box" then
-			if typeof(self.Orientation) == "Vector3" then
+			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
+				self.Position = self.CopyCFrame.Position
+				self.Size = self.CopyCFrame.Size
+				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
+				result = workspace:GetPartBoundsInBox(self.CopyCFrame.CFrame, self.CopyCFrame.Size, self.OverlapParams) or {} 
+			elseif typeof(self.Orientation) == "Vector3" then
 				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z)), self.Size, self.OverlapParams) or {}
-			elseif typeof(self.CopyCFrame) == "Instance" then
-				if self.CopyCFrame:IsA("BasePart") then
-					result = workspace:GetPartBoundsInBox(self.CopyCFrame.CFrame, self.Size, self.OverlapParams) or {} 
-				end
 			else
 				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position), self.Size, self.OverlapParams) or {}
 			end
@@ -579,8 +589,8 @@ local function MainRunner(_, deltaTime: number): ()
 					self.CharacterLeft:Fire(v)
 				end
 				if self._FirstQuery == false then
-				    for _,v in ipairs(XCurrentCharacter) do
-					    self.CharacterEntered:Fire(v)
+					for _,v in ipairs(XCurrentCharacter) do
+						self.CharacterEntered:Fire(v)
 					end
 				end
 
@@ -589,7 +599,7 @@ local function MainRunner(_, deltaTime: number): ()
 					self.PlayerLeft:Fire(v)
 				end
 				if self._FirstQuery == false then
-				    for _,v in ipairs(XCurrentPlayer) do
+					for _,v in ipairs(XCurrentPlayer) do
 						self.PlayerEntered:Fire(v)
 					end
 				end
@@ -1094,23 +1104,30 @@ function Hitbox:RemoveIgnore(object: Instance): number
 end
 
 function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?): boolean
-	Margin = Margin or 0.2
+	Margin = math.abs(Margin) or 0.32
+	if Margin > 0.5 then
+		Margin = 0.5
+	end
 	if DataBundle.Radius > 100 or DataBundle.Size.X > 50 or DataBundle.Size.Y > 50 or DataBundle.Size.Z > 50 then
 		warn(concatPrint("Hitbox is too large to support Hitbox:IsHitboxBackstab(). (Maximum 50 magnitude per-axis)"))
 		return false
-	elseif DataBundle.Position:Cross(Part.Position) >= math.abs(1 - Margin) then
+	elseif CFrame.new(DataBundle.Position, Part.Position + (Part.CFrame.LookVector * 5000)).LookVector:Dot(Part.CFrame.LookVector) >= math.abs(1 - Margin) and (Part.Position - DataBundle.Position).Magnitude > ((Part.Position - (Part.CFrame.LookVector * 2)) - DataBundle.Position).Magnitude then
 		return true
 	end
 	return false
 end
 
 function Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?): boolean
-	Margin = Margin or 0.2
+	Margin = math.abs(Margin) or 0.32
+	if Margin > 0.5 then
+		Margin = 0.5
+	end
 	local root: BasePart = Character:FindFirstChild("HumanoidRootPart")
 	if root then
-		if root.Position:Cross(Part.Position) >= math.abs(1 - Margin) and math.acos(root.CFrame.LookVector:Dot((Part.Position - root.Position).Unit)) >= (math.pi / 2) then
+		if root.CFrame.LookVector:Dot(Part.CFrame.LookVector) >= math.abs(1 - Margin) and (Part.Position - root.Position).Magnitude > ((Part.Position - (Part.CFrame.LookVector * 2)) - root.Position).Magnitude then
 			return true
 		end
+		return false
 	end
 	warn(concatPrint("Provided Character for Hitbox:IsBackstab() has no HumanoidRootPart."))
 	return false
