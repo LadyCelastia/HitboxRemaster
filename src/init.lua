@@ -710,7 +710,7 @@ function Connection:_Fire(...): ()
 		end)
 		if success == false then
 			coroutine.wrap(function()
-				error(concatPrint(err), 2)
+				error(concatPrint(err), getStackLevel())
 			end)
 		end
 		if self._Once == true then
