@@ -13,7 +13,7 @@ Zone:AddMemberBulk(partList)
 
 Zone.PartEntered:Connect(function(part)
 	print("Part entered! " .. part.Name)
-	end)
+end)
 
 Zone.PartLeft:Connect(function(part)
 	print("Part left! " .. part.Name)

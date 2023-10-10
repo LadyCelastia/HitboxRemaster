@@ -17,9 +17,10 @@ Tool.Activated:Connect(function()
     local Hitbox = HitboxRemaster.newHitbox({
 		["Pierce"] = 3
 	})
+    Hitbox:AddIgnore(Tool.Parent)
     Hitbox.CopyCFrame = Handle
     Hitbox.Hit:Connect(function(Humanoid, HitPart, DataBundle)
-        if Hitbox:IsHitboxBackstab(HitPart, DataBundle) == true then
+        if Hitbox:IsHitboxBackstab(HitPart, DataBundle) == true then -- You can use Hitbox:IsBackstab(HitPart, Character) instead!
             Humanoid:TakeDamage(20)
         else
             Humanoid:TakeDamage(10)
