@@ -156,16 +156,16 @@ Sets the Velocity of the Hitbox's constructed path to `velocity`.
 Hitbox:ChangeAttachment(attachment)
 ```
 Changes the Hitbox's Attachment to `attachment`. If `attachment` is nil, remove Attachment from Hitbox.
-### Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle)
+### Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?)
 ```lua
-local isBackstab = Hitbox:IsHitboxBackstab(HitPart, HitboxDataBundle) -> boolean
+local isBackstab = Hitbox:IsHitboxBackstab(HitPart, HitboxDataBundle, 0.2) -> boolean
 ```
-Determine if the data described by HitboxDataBundle is a backstab on HitPart. Returns boolean.
-### Hitbox:IsBackstab(Part: BasePart, Character: Model)
+Determine if the data described by HitboxDataBundle is a backstab on HitPart. Returns boolean. Margin is an optional number ranging from 0 to 0.5, which determines how lenient the backstab detection is. 0.5 would allow for side-stabs to count as backstabs while 0.1 would require basically perfect alignment. Defaults to 0.32. **Note: The detection position originates from the Hitbox's recorded center position.**
+### Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?)
 ```lua
-local isBackstab = Hitbox:IsBackstab(Part, Character) -> boolean
+local isBackstab = Hitbox:IsBackstab(Part, Character, 0.4) -> boolean
 ```
-Determine if `Character` backstabs `Part`. Returns boolean.
+Determine if `Character` backstabs `Part`. Returns boolean. Margin is an optional number ranging from 0 to 0.5, which determines how lenient the backstab detection is. 0.5 would allow for side-stabs to count as backstabs while 0.1 would require basically perfect alignment. Defaults to 0.32. **Note: The detection position originates from the provided character's root. Recommended to use this over Hitbox:IsHitboxBackstab() if used in tools of a character.**
 ### Hitbox:GetCurrentSerial()
 ```lua
 local highestSerial = Hitbox:GetCurrentSerial() -> number
