@@ -1107,10 +1107,10 @@ function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, M
 	if typeof(Margin) ~= "number" then
 		Margin = 0.32
 	end
+	Margin = math.abs(Margin)
 	if Margin > 0.5 then
 		Margin = 0.5
 	end
-	Margin = math.abs(Margin)
 	if DataBundle.Radius > 100 or DataBundle.Size.X > 50 or DataBundle.Size.Y > 50 or DataBundle.Size.Z > 50 then
 		warn(concatPrint("Hitbox is too large to support Hitbox:IsHitboxBackstab(). (Maximum 50 magnitude per-axis)"))
 		return false
@@ -1124,10 +1124,10 @@ function Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?): b
 	if typeof(Margin) ~= "number" then
 		Margin = 0.32
 	end
+	Margin = math.abs(Margin)
 	if Margin > 0.5 then
 		Margin = 0.5
 	end
-	Margin = math.abs(Margin)
 	local root: BasePart = Character:FindFirstChild("HumanoidRootPart")
 	if root then
 		if root.CFrame.LookVector:Dot(Part.CFrame.LookVector) >= math.abs(1 - Margin) and (Part.Position - root.Position).Magnitude > ((Part.Position - (Part.CFrame.LookVector * 2)) - root.Position).Magnitude then
