@@ -707,14 +707,12 @@ end
 function Connection:_Fire(...): ()
 	if self._Connected == true then
 		local parser = {...}
-		local success, err = pcall(function()
-			coroutine.wrap(self._Function)(table.unpack(parser))
-		end)
-		if success == false then
-			coroutine.wrap(function()
+		coroutine.wrap(function()
+			local success, err = self._Function(table.unpack(parser))
+			if success == false then
 				error(concatPrint(err), getStackLevel())
-			end)
-		end
+			end
+		end)
 		if self._Once == true then
 			self:Disconnect()
 		end
@@ -1106,10 +1104,13 @@ function Hitbox:RemoveIgnore(object: Instance): number
 end
 
 function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?): boolean
-	Margin = math.abs(Margin) or 0.32
+	if typeof(Margin) ~= "number" then
+		Margin = 0.32
+	end
 	if Margin > 0.5 then
 		Margin = 0.5
 	end
+	Margin = math.abs(Margin)
 	if DataBundle.Radius > 100 or DataBundle.Size.X > 50 or DataBundle.Size.Y > 50 or DataBundle.Size.Z > 50 then
 		warn(concatPrint("Hitbox is too large to support Hitbox:IsHitboxBackstab(). (Maximum 50 magnitude per-axis)"))
 		return false
@@ -1120,10 +1121,13 @@ function Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, M
 end
 
 function Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?): boolean
-	Margin = math.abs(Margin) or 0.32
+	if typeof(Margin) ~= "number" then
+		Margin = 0.32
+	end
 	if Margin > 0.5 then
 		Margin = 0.5
 	end
+	Margin = math.abs(Margin)
 	local root: BasePart = Character:FindFirstChild("HumanoidRootPart")
 	if root then
 		if root.CFrame.LookVector:Dot(Part.CFrame.LookVector) >= math.abs(1 - Margin) and (Part.Position - root.Position).Magnitude > ((Part.Position - (Part.CFrame.LookVector * 2)) - root.Position).Magnitude then
