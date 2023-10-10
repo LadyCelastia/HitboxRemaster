@@ -1,7 +1,7 @@
 # HitboxRemaster
 Dynamic Hitboxes &amp; Static Zones
 
-Current version: Beta v1.0.2
+Current version: Beta v1.0.2b
 
 For details, please go to https://ladycelastia.github.io/HitboxRemaster
 
@@ -9,7 +9,11 @@ For details, please go to https://ladycelastia.github.io/HitboxRemaster
 
 Change logs
 
-v1.0.2: (10/10/2023)
+v1.0.2b: (10/10/2023)
+- Fixed margin erroring when nil (issue #1)
+- Fixed stack tracer parser (issue #1)
+
+v1.0.2a: (10/10/2023)
 - Fixed Hitbox:IsHitboxBackstab and Hitbox:IsBackstab (issue #2)
 - New optional argument (Margin) for Hitbox:IsHitboxBackstab and Hitbox:IsBackstab
 - API updated
