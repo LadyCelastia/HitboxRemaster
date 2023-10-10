@@ -1,6 +1,8 @@
 --[[
 	LadyCelestia 9/23/2023
 	A complete overhaul of HitboxMaster. Type-safe with generic and lambda support.
+
+	Version: 1.0.2 (10/10/2023)
 --]]
 
 --[[
