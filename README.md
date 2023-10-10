@@ -11,6 +11,7 @@ Change logs
 
 v1.0.2c: (10/10/2023)
 - Reverted stack tracer parser completely (issue #1)
+- Updated examples to include Hitbox:AddIgnore()
 
 v1.0.2b: (10/10/2023)
 - Fixed margin erroring when nil (issue #1)
