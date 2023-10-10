@@ -2,7 +2,7 @@
 	LadyCelestia 9/23/2023
 	A complete overhaul of HitboxMaster. Type-safe with generic and lambda support.
 
-	Version: 1.0.2 (10/10/2023)
+	Version: 1.0.2c (10/10/2023)
 --]]
 
 --[[
@@ -706,16 +706,10 @@ end
 
 function Connection:_Fire(...): ()
 	if self._Connected == true then
-		local parser = {...}
-		coroutine.wrap(function()
-			local success, err = self._Function(table.unpack(parser))
-			if success == false then
-				error(concatPrint(err), getStackLevel())
-			end
-		end)
 		if self._Once == true then
 			self:Disconnect()
 		end
+		coroutine.wrap(self._Function)(...)
 	end
 end
 
