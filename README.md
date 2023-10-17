@@ -1,7 +1,7 @@
 # HitboxRemaster
 Dynamic Hitboxes &amp; Static Zones
 
-Current version: Beta v1.0.2b
+Current version: Beta v1.1
 
 For details, please go to https://ladycelastia.github.io/HitboxRemaster
 
@@ -11,6 +11,7 @@ Change logs
 
 v1.1: (17/10/2023)
 - Completely overhauled types, works with Roblox Studio intellisense now.
+- Major optimization: All ScriptSignals of Hitbox and Zone now no longer fire unless there is at least one ScriptConnection.
 - Hitbox now backtracks if the distance between last frame's position and current frame's position is larger than the Hitbox. (Only works on Sphere shape currently)
 - Added Hitbox.PartEntered and Hitbox.PartLeft, both are ScriptSignals of the Hitbox class which fires when **any** part enters or leaves the Hitbox while the Hitbox is active.
 - Hitbox now no longer completely ignore characters with a ForceField. Due to this, characters with a ForceField are now registered by Hitbox.Hit, please adjust your scripts accordingly.
