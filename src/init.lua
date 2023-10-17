@@ -275,12 +275,20 @@ local function HitCheck(self: HitboxType): ()
 				end
 			end
 			
-			local XLastPart, XCurrentPart = CompareTableValues(self._PartsInside, appearedParts)
-			for _,v in ipairs(XLastPart) do
-				self.PartLeft:Fire(v)
-			end
-			for _,v in ipairs(XCurrentPart) do
-				self.PartEntered:Fire(v)
+			local plcn = #self.PartLeft._ActiveRunner._Connections
+			local pecn = #self.PartEntered._ActiveRunner._Connections
+			if plcn > 0 or pecn > 0 then
+				local XLastPart, XCurrentPart = CompareTableValues(self._PartsInside, appearedParts)
+				if plcn > 0 then
+					for _,v in ipairs(XLastPart) do
+						self.PartLeft:Fire(v)
+					end
+				end
+				if pecn > 0 then
+					for _,v in ipairs(XCurrentPart) do
+						self.PartEntered:Fire(v)
+					end
+				end
 			end
 			self._PartsInside = appearedParts
 
@@ -300,13 +308,16 @@ local function HitCheck(self: HitboxType): ()
 						newSerial.Value = true
 						newSerial.Parent = v[2].Parent
 					end
-					---@diagnostic disable-next-line: redundant-parameter
-					self.Hit:Fire(v[1], v[2], { -- Humanoid, HitPart, HitboxDataBundle
-						["Serial"] = self.Serial,
-						["Position"] = self.Position,
-						["Radius"] = self.Radius or 0,
-						["Size"] = self.Size or Vector3.new(0, 0, 0)
-					})
+					local hcn = #self.Hit._ActiveRunner._Connections
+					if hcn > 0 then
+						---@diagnostic disable-next-line: redundant-parameter
+						self.Hit:Fire(v[1], v[2], { -- Humanoid, HitPart, HitboxDataBundle
+							["Serial"] = self.Serial,
+							["Position"] = self.Position,
+							["Radius"] = self.Radius or 0,
+							["Size"] = self.Size or Vector3.new(0, 0, 0)
+						})
+					end
 					table.insert(registeredHumanoids, v[1])
 					self.Pierce -= 1
 					if self.Pierce <= 0 then
@@ -409,33 +420,51 @@ local function MainRunner(_, deltaTime: number): ()
 				local CurrentCharacterList = self:GetCharactersInside(CurrentPartList)
 				local CurrentPlayerList = self:GetPlayersInside(CurrentPartList)
 
-				local XLastPart, XCurrentPart = CompareTableValues(self._PartsInside, CurrentPartList)
-				for _,v in ipairs(XLastPart) do
-					self.PartLeft:Fire(v)
-				end
-				if self._FirstQuery == false then
-					for _,v in ipairs(XCurrentPart) do
-						self.PartEntered:Fire(v)
+				local plcn = #self.PartLeft._ActiveRunner._Connections
+				local pecn = #self.PartEntered._ActiveRunner._Connections
+				if plcn > 0 or pecn > 0 then
+					local XLastPart, XCurrentPart = CompareTableValues(self._PartsInside, CurrentPartList)
+					if plcn > 0 then
+						for _,v in ipairs(XLastPart) do
+							self.PartLeft:Fire(v)
+						end
+					end
+					if pecn > 0 and self._FirstQuery == false then
+						for _,v in ipairs(XCurrentPart) do
+							self.PartEntered:Fire(v)
+						end
 					end
 				end
 
-				local XLastCharacter, XCurrentCharacter = CompareTableValues(self._CharactersInside, CurrentCharacterList)
-				for _,v in ipairs(XLastCharacter) do
-					self.CharacterLeft:Fire(v)
-				end
-				if self._FirstQuery == false then
-					for _,v in ipairs(XCurrentCharacter) do
-						self.CharacterEntered:Fire(v)
+				local clcn = #self.CharacterLeft._ActiveRunner._Connections
+				local cecn = #self.CharacterEntered._ActiveRunner._Connections
+				if clcn > 0 or cecn > 0 then
+					local XLastCharacter, XCurrentCharacter = CompareTableValues(self._CharactersInside, CurrentCharacterList)
+					if clcn > 0 then
+						for _,v in ipairs(XLastCharacter) do
+							self.CharacterLeft:Fire(v)
+						end
+					end
+					if cecn > 0 and self._FirstQuery == false then
+						for _,v in ipairs(XCurrentCharacter) do
+							self.CharacterEntered:Fire(v)
+						end
 					end
 				end
 
-				local XLastPlayer, XCurrentPlayer = CompareTableValues(self._PlayersInside, CurrentPlayerList)
-				for _,v in ipairs(XLastPlayer) do
-					self.PlayerLeft:Fire(v)
-				end
-				if self._FirstQuery == false then
-					for _,v in ipairs(XCurrentPlayer) do
-						self.PlayerEntered:Fire(v)
+				local plrlcn = #self.PlayerLeft._ActiveRunner._Connections
+				local plrecn = #self.PlayerEntered._ActiveRunner._Connections
+				if plrlcn > 0 or plrecn > 0 then
+					local XLastPlayer, XCurrentPlayer = CompareTableValues(self._PlayersInside, CurrentPlayerList)
+					if plrlcn > 0 then
+						for _,v in ipairs(XLastPlayer) do
+							self.PlayerLeft:Fire(v)
+						end
+					end
+					if plrecn > 0 and self._FirstQuery == false then
+						for _,v in ipairs(XCurrentPlayer) do
+							self.PlayerEntered:Fire(v)
+						end
 					end
 				end
 
