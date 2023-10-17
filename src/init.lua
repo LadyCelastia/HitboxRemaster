@@ -1,206 +1,9 @@
 --[[
 	LadyCelestia 9/23/2023
-	A complete overhaul of HitboxMaster. Type-safe with generic and lambda support.
+	A complete overhaul of HitboxMaster.
 
-	Version: 1.0.2c (10/10/2023)
+	Version: 1.1 (17/10/2023)
 --]]
-
---[[
-    @define
-    @type
-    Type definitions
---]]
-type enumPair<T> = {string: T}
-type Pair<k,v> = {k: v}
-type BezierPoints = {
-	Start: Vector3,
-	Control1: Vector3,
-	Control2: Vector3?,
-	End: Vector3
-}
-type LerpValue = Vector3 | Vector2 | CFrame | number | UDim2 | UDim | Color3
-export type ScriptConnection = {
-	_Connected: boolean,
-	_Signal: ScriptSignal,
-	_Function: (any) -> (any),
-	_Identifier: string,
-	_Once: boolean,
-	_State: string,
-	_Fire: (any) -> (),
-
-	new: (signal: ScriptSignal, func: (any), once: boolean?) -> (ScriptConnection),
-	StateEnum: {enumPair<string>},
-	GetIdentifier: () -> (string),
-	Disconnect: () -> ()
-}
-export type ConnectionRunner = {
-	_Connections: {ScriptConnection},
-	_State: string,
-	_AddConnection: (Cn: ScriptConnection) -> (),
-	_RemoveConnection: (identifier: string) -> (),
-	_CleanUp: () -> (),
-	_GetConnections: () -> (Pair<number, ScriptConnection>),
-	_FireOne: (identifier: string, args: {any}) -> (),
-	_FireAll: (any) -> (),
-
-	new: () -> (ConnectionRunner),
-	Destroy: () -> ()
-}
-export type ScriptSignal = {
-	_ActiveRunner: ConnectionRunner,
-	_State: string,
-
-	new: () -> (ScriptSignal),
-	StateEnum: {enumPair<string>},
-	Connect: (func: (any) -> (any), connectImmediately: boolean?) -> (ScriptConnection),
-	DisconnectAll: () -> (),
-	DisconnectOne: (identifier: string) -> (),
-	Once: (func: (any)) -> (ScriptConnection),
-	Fire: (any) -> (),
-	FireOne: (identifier: string, args: {any}) -> (),
-	GetState: () -> (string),
-	Destroy: () -> ()
-}
-export type TrajectoryType = {
-	_DirectionalVector: Vector3?,
-	_Length: number,
-	_Completion: number,
-	_Points: Pair<string, Vector3>,
-	_GetBezierMode: () -> (string),
-
-	new: (Fields: Pair<string, any>) -> (TrajectoryType),
-	Construct: (Mode: string, Fields: Pair<string, any>) -> (boolean),
-	Deconstruct: () -> (),
-	Destroy: () -> (),
-	ConstructionMode: string,
-	Velocity: number
-}
-export type HitboxType = {
-	_Attachment: Attachment?,
-	_CurrentFrame: number,
-	_CanWarn: boolean,
-	_Visual: BasePart?,
-	_Destroying: boolean,
-
-	new: (Fields: Pair<string, any>) -> (HitboxType),
-	Visualize: () -> (BasePart?),
-	Unvisualize: (doNotWarn: boolean?) -> (),
-	Activate: () -> (),
-	Deactivate: () -> (),
-	GetCurrentSerial: () -> (number),
-	GetConstructionMode: () -> (string),
-	GetCurrentMode: () -> (string),
-	GetVelocity: () -> (number),
-	SetVelocity: (velocity: number) -> (),
-	AddIgnore: (object: Instance) -> (boolean),
-	RemoveIgnore: (object: Instance) -> (number),
-	IsHitboxBackstab: (Part: BasePart, DataBundle: HitboxDataBundle) -> (boolean),
-	IsBackstab: (Part: BasePart, Character: Model) -> (boolean),
-	Destroy: () -> (),
-	ShapeEnum: enumPair<string>,
-	ModeEnum: enumPair<string>,
-	StateEnum: enumPair<string>,
-	ConstructionEnum: enumPair<string>,
-	BezierEnum: enumPair<string>,
-	Hit: ScriptSignal,
-	Trajectory: TrajectoryType,
-	Serial: number,
-	Shape: string,
-	Position: Vector3,
-	Pierce: number,
-	Debounce: number,
-	LifeTime: number,
-	Orientation: Vector3,
-	CopyCFrame: BasePart,
-	OverlapParams: OverlapParams,
-	Active: boolean,
-	Radius: number,
-	Size: Vector3,
-}
-export type HitboxDataBundle = {
-	Serial: number,
-	Position: Vector3,
-	Radius: number,
-	Size: Vector3
-}
-export type MetatableType = {
-	_Members: {
-		Instance: Instance,
-		Connections: {Pair<string, RBXScriptConnection>}
-	},
-	_State: string,
-	_CleanUp: () -> (),
-	_Add: (Value: Instance, Metafunctions: Pair<string, (any)>?) -> (),
-	_Remove: (Value: Instance, Metafunctions: Instance) -> (),
-	_AddMetafunction: (Value: Instance, Metafunctions: Pair<string, (any)>) -> (),
-	_RemoveMetafunction: (Value: Instance, Metafunctions: {string}) -> (),
-	_IsMember: (Value: Instance) -> (boolean),
-	_GetMembers: () -> ({BasePart}),
-
-	new: (Members: {any}?) -> (MetatableType),
-	Destroy: () -> ()
-}
-export type ZoneComponentType = {
-	_Part: BasePart?,
-	_State: string,
-	_NewPart: () -> (),
-
-	new: (Fields: Pair<string, any>?) -> (ZoneComponentType),
-	Shape: string,
-	CFrame: CFrame,
-	Size: Vector3,
-	Query: (QueryType: string, Params: OverlapParams) -> (BasePart),
-	GetCharacters: (CharacterResolution: string, QueryType: string, Params: OverlapParams) -> ({Model}),
-	GetPlayers: (CharacterResolution: string, QueryType: string, Params: OverlapParams) -> ((Model)),
-	Destroy: () -> ()
-}
-export type ZoneType = {
-	_CurrentFrame: number,
-	_CanWarn: boolean,
-	_Visual: BasePart?,
-	_MemberParts: MetatableType,
-	_MemberComponents: Pair<BasePart | number, ZoneComponentType>,
-	_PartsInside: {BasePart},
-	_CharactersInside: {Model},
-	_PlayersInside: {Model},
-	_Destroying: boolean,
-	_FirstQuery: boolean,
-
-	new: (Fields: Pair<string, any>) -> (ZoneType),
-	CharacterResolutionEnum: enumPair<string>,
-	QueryTypeEnum: enumPair<string>,
-	StateEnum: enumPair<string>,
-	CharacterEntered: ScriptSignal,
-	CharacterLeft: ScriptSignal,
-	PlayerEntered: ScriptSignal,
-	PlayerLeft: ScriptSignal,
-	PartEntered: ScriptSignal,
-	PartLeft: ScriptSignal,
-	Serial: number,
-	Shape: string,
-	CharacterResolution: string,
-	QueryType: string,
-	Rate: number,
-	OverlapParams: OverlapParams,
-	Active: boolean,
-	Update: () -> (),
-	Relocate: (newCFrame: CFrame) -> (),
-	AddMember: (part: BasePart, Metafunctions: Pair<string, (any)>?) -> (),
-	RemoveMember: (part: BasePart) -> (),
-	AddComponent: (Component: ZoneComponentType) -> (number?),
-	RemoveComponent: (index: BasePart | number) -> (),
-	IsPartInside: (part: BasePart) -> (boolean),
-	IsCharacterInside: (Character: Model) -> (boolean),
-	IsPlayerInside: (Character: Model) -> (boolean),
-	GetPartsInside: () -> ({BasePart}),
-	GetCharactersInside: (PartList: {BasePart}?) -> ({Model}),
-	GetPlayersInside: (PartList: {BasePart}?) -> ({Model}),
-	Activate: () -> (),
-	Deactivate: () -> (),
-	Destroy: () -> (),
-	TranslateToMetafunction: (PartList: {BasePart}) -> ({Pair<string, any>}),
-	AddMemberBulk: (partList: {BasePart}) -> ()
-}
 
 --[[
     @define
@@ -424,6 +227,97 @@ local function CharacterQuerySearch(CharacterList: {Pair<Model, {Pair<BasePart, 
 	return ValidCharacterList
 end
 
+-- Separated from HitReg for size compensation
+local function HitCheck(self: HitboxType): ()
+	if self.Pierce > 0 then
+		local result: {BasePart} = {}
+		if self.Shape == "Sphere" then
+			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
+				self.Position = self.CopyCFrame.Position
+				self.Size = self.CopyCFrame.Size
+				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
+				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {} 
+			elseif typeof(self.Orientation) == "Vector3" then
+				result = workspace:GetPartBoundsInRadius((CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z))).Position, self.Radius, self.OverlapParams) or {}
+			else
+				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {}
+			end
+		elseif self.Shape == "Box" then
+			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
+				self.Position = self.CopyCFrame.Position
+				self.Size = self.CopyCFrame.Size
+				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
+				result = workspace:GetPartBoundsInBox(self.CopyCFrame.CFrame, self.CopyCFrame.Size, self.OverlapParams) or {} 
+			elseif typeof(self.Orientation) == "Vector3" then
+				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z)), self.Size, self.OverlapParams) or {}
+			else
+				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position), self.Size, self.OverlapParams) or {}
+			end
+		elseif self._CanWarn == true then
+			self._CanWarn = false
+			task.delay(5, function()
+				self._CanWarn = true
+			end)
+			warn(concatPrint("Hitbox " .. self.Serial .. " has an invalid shape."))
+		end
+		if #result > 0 then
+			local hitHumanoids: {humanoid: BasePart} = {}
+			local registeredHumanoids: {Humanoid} = {}
+			local appearedParts: {BasePart} = {}
+
+			for _,v in ipairs(result) do
+				table.insert(appearedParts, v)
+				local hum = v.Parent:FindFirstChildOfClass("Humanoid")
+				if hum ~= nil then
+					if v.Parent:FindFirstChild("HitboxSerial" .. self.Serial) == nil and hum:GetState() ~= Enum.HumanoidStateType.Dead then
+						table.insert(hitHumanoids, {hum, v})
+					end
+				end
+			end
+			
+			local XLastPart, XCurrentPart = CompareTableValues(self._PartsInside, appearedParts)
+			for _,v in ipairs(XLastPart) do
+				self.PartLeft:Fire(v)
+			end
+			for _,v in ipairs(XCurrentPart) do
+				self.PartEntered:Fire(v)
+			end
+			self._PartsInside = appearedParts
+
+			for _,v in pairs(hitHumanoids) do
+				local canHit = true
+				for _,v2 in ipairs(registeredHumanoids) do
+					if v[1] == v2 then
+						canHit = false
+						break
+					end
+				end
+				if canHit == true then
+					if self.Debounce > 0 then
+						local newSerial: BoolValue = Instance.new("BoolValue")
+						Debris:AddItem(newSerial, self.Debounce)
+						newSerial.Name = "HitboxSerial" .. self.Serial
+						newSerial.Value = true
+						newSerial.Parent = v[2].Parent
+					end
+					---@diagnostic disable-next-line: redundant-parameter
+					self.Hit:Fire(v[1], v[2], { -- Humanoid, HitPart, HitboxDataBundle
+						["Serial"] = self.Serial,
+						["Position"] = self.Position,
+						["Radius"] = self.Radius or 0,
+						["Size"] = self.Size or Vector3.new(0, 0, 0)
+					})
+					table.insert(registeredHumanoids, v[1])
+					self.Pierce -= 1
+					if self.Pierce <= 0 then
+						break
+					end
+				end
+			end
+		end
+	end
+end
+
 -- Hitbox spatial query main
 local function HitReg(self: HitboxType, deltaTime: number): {BasePart}
 	local HitboxMode = self:GetCurrentMode()
@@ -469,82 +363,20 @@ local function HitReg(self: HitboxType, deltaTime: number): {BasePart}
 		end
 	end
 
-	if self.Pierce > 0 then
-		local result: {BasePart} = {}
-		if self.Shape == "Sphere" then
-			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
-				self.Position = self.CopyCFrame.Position
-				self.Size = self.CopyCFrame.Size
-				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
-				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {} 
-			elseif typeof(self.Orientation) == "Vector3" then
-				result = workspace:GetPartBoundsInRadius((CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z))).Position, self.Radius, self.OverlapParams) or {}
-			else
-				result = workspace:GetPartBoundsInRadius(self.Position, self.Radius, self.OverlapParams) or {}
-			end
-		elseif self.Shape == "Box" then
-			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
-				self.Position = self.CopyCFrame.Position
-				self.Size = self.CopyCFrame.Size
-				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
-				result = workspace:GetPartBoundsInBox(self.CopyCFrame.CFrame, self.CopyCFrame.Size, self.OverlapParams) or {} 
-			elseif typeof(self.Orientation) == "Vector3" then
-				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z)), self.Size, self.OverlapParams) or {}
-			else
-				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position), self.Size, self.OverlapParams) or {}
-			end
-		elseif self._CanWarn == true then
-			self._CanWarn = false
-			task.delay(5, function()
-				self._CanWarn = true
-			end)
-			warn(concatPrint("Hitbox " .. self.Serial .. " has an invalid shape."))
-		end
-		if #result > 0 then
-			local hitHumanoids: {humanoid: BasePart} = {}
-			local registeredHumanoids: {Humanoid} = {}
-
-			for _,v in ipairs(result) do
-				local hum = v.Parent:FindFirstChildOfClass("Humanoid")
-				if hum ~= nil then
-					if v.Parent:FindFirstChildOfClass("ForceField") == nil and v.Parent:FindFirstChild("HitboxSerial" .. self.Serial) == nil and hum:GetState() ~= Enum.HumanoidStateType.Dead then
-						table.insert(hitHumanoids, {hum, v})
-					end
-				end
-			end
-
-			for _,v in pairs(hitHumanoids) do
-				local canHit = true
-				for _,v2 in ipairs(registeredHumanoids) do
-					if v[1] == v2 then
-						canHit = false
-						break
-					end
-				end
-				if canHit == true then
-					if self.Debounce > 0 then
-						local newSerial: BoolValue = Instance.new("BoolValue")
-						Debris:AddItem(newSerial, self.Debounce)
-						newSerial.Name = "HitboxSerial" .. self.Serial
-						newSerial.Value = true
-						newSerial.Parent = v[2].Parent
-					end
-					---@diagnostic disable-next-line: redundant-parameter
-					self.Hit:Fire(v[1], v[2], { -- Humanoid, HitPart, HitboxDataBundle
-						["Serial"] = self.Serial,
-						["Position"] = self.Position,
-						["Radius"] = self.Radius or 0,
-						["Size"] = self.Size or Vector3.new(0, 0, 0)
-					})
-					table.insert(registeredHumanoids, v[1])
-					self.Pierce -= 1
-					if self.Pierce <= 0 then
-						break
-					end
-				end
+	local distance = (self.Position - self._LastPosition).Magnitude
+	local savedPos = self.Position
+	if self.Shape == "Sphere" then
+		local factor = math.ceil(distance / self.Radius)
+		if factor > 1 then
+			for i = 1, factor do
+				self.Position = self._LastPosition:Lerp(savedPos, i / (factor + 1))
+				HitCheck(self)
 			end
 		end
 	end
+	self.Position = savedPos
+	HitCheck(self)
+
 	if ((self.LifeTime <= 0 and HitboxMode ~= "Bezier") or (HitboxMode == "Bezier" and self.Trajectory._Completion >= 1)) and self._Destroying == false then
 		self:Destroy()
 	end
@@ -560,6 +392,7 @@ local function MainRunner(_, deltaTime: number): ()
 				HitReg(self, deltaTime)
 			else
 				local Factor = math.floor(deltaTime / (1/60))
+				---@diagnostic disable-next-line: unused-local
 				for i = 1, Factor do
 					HitReg(self, deltaTime / Factor)
 				end
@@ -952,9 +785,13 @@ Hitbox.new = function(Fields: {Pair<string, any>}): HitboxType
 	self._CanWarn = true
 	self._Visual = nil
 	self._Destroying = false
+	self._PartsInside = {}
+	self._LastPosition = Fields["Position"] or Vector3.new(0, 0, 0)
 
 	-- Public variables
 	self.Hit = Signal.new()
+	self.PartEntered = Signal.new()
+	self.PartLeft = Signal.new()
 	self.Trajectory = Trajectory.new()
 	self.Serial = HitboxSerial
 	self.Shape = Fields["Shape"] or enum.Shape.Box
@@ -978,6 +815,13 @@ Hitbox.new = function(Fields: {Pair<string, any>}): HitboxType
 	ActiveHitboxes[self.Serial] = self
 
 	return self
+end
+
+function Hitbox:ChangePosition(newPos: Vector3): ()
+	if typeof(newPos) == "Vector3" then
+		self._LastPosition = newPos
+		self.Position = newPos
+	end
 end
 
 function Hitbox:Visualize(): BasePart?
@@ -1753,5 +1597,299 @@ end
 function Module:_GetActiveZones(): {Pair<number, ZoneType>}
 	return ActiveZones
 end
+
+--[[
+    @define
+    @type
+    Type definitions
+--]]
+type enumPair<T> = {string: T}
+type Pair<k,v> = {k: v}
+type BezierPoints = {
+	Start: Vector3,
+	Control1: Vector3,
+	Control2: Vector3?,
+	End: Vector3
+}
+type LerpValue = Vector3 | Vector2 | CFrame | number | UDim2 | UDim | Color3
+export type ScriptConnection = typeof(Connection) & {
+	_Connected: boolean,
+	_Signal: ScriptSignal,
+	_Function: (any) -> (any),
+	_Identifier: string,
+	_Once: boolean,
+	_State: string,
+	StateEnum: {enumPair<string>}
+}
+export type ConnectionRunner = typeof(Runner) &  {
+	_Connections: {ScriptConnection},
+	_State: string
+}
+export type ScriptSignal = typeof(Signal) & {
+	_ActiveRunner: ConnectionRunner,
+	_State: string,
+	StateEnum: {enumPair<string>}
+}
+export type TrajectoryType = typeof(Trajectory) & {
+	_DirectionalVector: Vector3?,
+	_Length: number,
+	_Completion: number,
+	_Points: Pair<string, Vector3>,
+	ConstructionMode: string,
+	Velocity: number
+}
+export type HitboxDataBundle = {
+	Serial: number,
+	Position: Vector3,
+	Radius: number,
+	Size: Vector3
+}
+export type HitboxType = typeof(Hitbox) & {
+	_Attachment: Attachment?,
+	_CurrentFrame: number,
+	_CanWarn: boolean,
+	_Visual: BasePart?,
+	_Destroying: boolean,
+	ShapeEnum: enumPair<string>,
+	ModeEnum: enumPair<string>,
+	StateEnum: enumPair<string>,
+	ConstructionEnum: enumPair<string>,
+	BezierEnum: enumPair<string>,
+	Hit: ScriptSignal,
+	Trajectory: TrajectoryType,
+	Serial: number,
+	Shape: string,
+	Position: Vector3,
+	Pierce: number,
+	Debounce: number,
+	LifeTime: number,
+	Orientation: Vector3,
+	CopyCFrame: BasePart,
+	OverlapParams: OverlapParams,
+	Active: boolean,
+	Radius: number,
+	Size: Vector3,
+}
+export type MetatableType = typeof(Metatable) & {
+	_Members: {
+		Instance: Instance,
+		Connections: {Pair<string, RBXScriptConnection>}
+	},
+	_State: string
+}
+export type ZoneComponentType = typeof(ZoneComponent) & {
+	_Part: BasePart?,
+	_State: string,
+	Shape: string,
+	CFrame: CFrame,
+	Size: Vector3,
+}
+export type ZoneType = typeof(Zone) & {
+	_CurrentFrame: number,
+	_CanWarn: boolean,
+	_Visual: BasePart?,
+	_MemberParts: MetatableType,
+	_MemberComponents: Pair<BasePart | number, ZoneComponentType>,
+	_PartsInside: {BasePart},
+	_CharactersInside: {Model},
+	_PlayersInside: {Model},
+	_Destroying: boolean,
+	_FirstQuery: boolean,
+	CharacterResolutionEnum: enumPair<string>,
+	QueryTypeEnum: enumPair<string>,
+	StateEnum: enumPair<string>,
+	CharacterEntered: ScriptSignal,
+	CharacterLeft: ScriptSignal,
+	PlayerEntered: ScriptSignal,
+	PlayerLeft: ScriptSignal,
+	PartEntered: ScriptSignal,
+	PartLeft: ScriptSignal,
+	Serial: number,
+	Shape: string,
+	CharacterResolution: string,
+	QueryType: string,
+	Rate: number,
+	OverlapParams: OverlapParams,
+	Active: boolean
+}
+
+--[[ Legacy Types
+export type ScriptConnection = {
+	_Connected: boolean,
+	_Signal: ScriptSignal,
+	_Function: (any) -> (any),
+	_Identifier: string,
+	_Once: boolean,
+	_State: string,
+	_Fire: (any) -> (),
+
+	new: (signal: ScriptSignal, func: (any), once: boolean?) -> (ScriptConnection),
+	StateEnum: {enumPair<string>},
+	GetIdentifier: () -> (string),
+	Disconnect: () -> ()
+}
+export type ConnectionRunner = {
+	_Connections: {ScriptConnection},
+	_State: string,
+	_AddConnection: (Cn: ScriptConnection) -> (),
+	_RemoveConnection: (identifier: string) -> (),
+	_CleanUp: () -> (),
+	_GetConnections: () -> (Pair<number, ScriptConnection>),
+	_FireOne: (identifier: string, args: {any}) -> (),
+	_FireAll: (any) -> (),
+
+	new: () -> (ConnectionRunner),
+	Destroy: () -> ()
+}
+export type ScriptSignal = {
+	_ActiveRunner: ConnectionRunner,
+	_State: string,
+
+	new: () -> (ScriptSignal),
+	StateEnum: {enumPair<string>},
+	Connect: (func: (any) -> (any), connectImmediately: boolean?) -> (ScriptConnection),
+	DisconnectAll: () -> (),
+	DisconnectOne: (identifier: string) -> (),
+	Once: (func: (any)) -> (ScriptConnection),
+	Fire: (any) -> (),
+	FireOne: (identifier: string, args: {any}) -> (),
+	GetState: () -> (string),
+	Destroy: () -> ()
+}
+export type TrajectoryType = {
+	_DirectionalVector: Vector3?,
+	_Length: number,
+	_Completion: number,
+	_Points: Pair<string, Vector3>,
+	_GetBezierMode: () -> (string),
+
+	new: (Fields: Pair<string, any>) -> (TrajectoryType),
+	Construct: (Mode: string, Fields: Pair<string, any>) -> (boolean),
+	Deconstruct: () -> (),
+	Destroy: () -> (),
+	ConstructionMode: string,
+	Velocity: number
+}
+export type HitboxType = {
+	_Attachment: Attachment?,
+	_CurrentFrame: number,
+	_CanWarn: boolean,
+	_Visual: BasePart?,
+	_Destroying: boolean,
+
+	new: (Fields: Pair<string, any>) -> (HitboxType),
+	Visualize: () -> (BasePart?),
+	Unvisualize: (doNotWarn: boolean?) -> (),
+	Activate: () -> (),
+	Deactivate: () -> (),
+	GetCurrentSerial: () -> (number),
+	GetConstructionMode: () -> (string),
+	GetCurrentMode: () -> (string),
+	GetVelocity: () -> (number),
+	SetVelocity: (velocity: number) -> (),
+	AddIgnore: (object: Instance) -> (boolean),
+	RemoveIgnore: (object: Instance) -> (number),
+	IsHitboxBackstab: (Part: BasePart, DataBundle: HitboxDataBundle) -> (boolean),
+	IsBackstab: (Part: BasePart, Character: Model) -> (boolean),
+	Destroy: () -> (),
+	ShapeEnum: enumPair<string>,
+	ModeEnum: enumPair<string>,
+	StateEnum: enumPair<string>,
+	ConstructionEnum: enumPair<string>,
+	BezierEnum: enumPair<string>,
+	Hit: ScriptSignal,
+	Trajectory: TrajectoryType,
+	Serial: number,
+	Shape: string,
+	Position: Vector3,
+	Pierce: number,
+	Debounce: number,
+	LifeTime: number,
+	Orientation: Vector3,
+	CopyCFrame: BasePart,
+	OverlapParams: OverlapParams,
+	Active: boolean,
+	Radius: number,
+	Size: Vector3,
+}
+export type MetatableType = {
+	_Members: {
+		Instance: Instance,
+		Connections: {Pair<string, RBXScriptConnection>}
+	},
+	_State: string,
+	_CleanUp: () -> (),
+	_Add: (Value: Instance, Metafunctions: Pair<string, (any)>?) -> (),
+	_Remove: (Value: Instance, Metafunctions: Instance) -> (),
+	_AddMetafunction: (Value: Instance, Metafunctions: Pair<string, (any)>) -> (),
+	_RemoveMetafunction: (Value: Instance, Metafunctions: {string}) -> (),
+	_IsMember: (Value: Instance) -> (boolean),
+	_GetMembers: () -> ({BasePart}),
+
+	new: (Members: {any}?) -> (MetatableType),
+	Destroy: () -> ()
+}
+export type ZoneComponentType = {
+	_Part: BasePart?,
+	_State: string,
+	_NewPart: () -> (),
+
+	new: (Fields: Pair<string, any>?) -> (ZoneComponentType),
+	Shape: string,
+	CFrame: CFrame,
+	Size: Vector3,
+	Query: (QueryType: string, Params: OverlapParams) -> (BasePart),
+	GetCharacters: (CharacterResolution: string, QueryType: string, Params: OverlapParams) -> ({Model}),
+	GetPlayers: (CharacterResolution: string, QueryType: string, Params: OverlapParams) -> ((Model)),
+	Destroy: () -> ()
+}
+export type ZoneType = {
+	_CurrentFrame: number,
+	_CanWarn: boolean,
+	_Visual: BasePart?,
+	_MemberParts: MetatableType,
+	_MemberComponents: Pair<BasePart | number, ZoneComponentType>,
+	_PartsInside: {BasePart},
+	_CharactersInside: {Model},
+	_PlayersInside: {Model},
+	_Destroying: boolean,
+	_FirstQuery: boolean,
+
+	new: (Fields: Pair<string, any>) -> (ZoneType),
+	CharacterResolutionEnum: enumPair<string>,
+	QueryTypeEnum: enumPair<string>,
+	StateEnum: enumPair<string>,
+	CharacterEntered: ScriptSignal,
+	CharacterLeft: ScriptSignal,
+	PlayerEntered: ScriptSignal,
+	PlayerLeft: ScriptSignal,
+	PartEntered: ScriptSignal,
+	PartLeft: ScriptSignal,
+	Serial: number,
+	Shape: string,
+	CharacterResolution: string,
+	QueryType: string,
+	Rate: number,
+	OverlapParams: OverlapParams,
+	Active: boolean,
+	Update: () -> (),
+	Relocate: (newCFrame: CFrame) -> (),
+	AddMember: (part: BasePart, Metafunctions: Pair<string, (any)>?) -> (),
+	RemoveMember: (part: BasePart) -> (),
+	AddComponent: (Component: ZoneComponentType) -> (number?),
+	RemoveComponent: (index: BasePart | number) -> (),
+	IsPartInside: (part: BasePart) -> (boolean),
+	IsCharacterInside: (Character: Model) -> (boolean),
+	IsPlayerInside: (Character: Model) -> (boolean),
+	GetPartsInside: () -> ({BasePart}),
+	GetCharactersInside: (PartList: {BasePart}?) -> ({Model}),
+	GetPlayersInside: (PartList: {BasePart}?) -> ({Model}),
+	Activate: () -> (),
+	Deactivate: () -> (),
+	Destroy: () -> (),
+	TranslateToMetafunction: (PartList: {BasePart}) -> ({Pair<string, any>}),
+	AddMemberBulk: (partList: {BasePart}) -> ()
+}
+--]]
 
 return Module

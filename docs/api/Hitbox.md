@@ -120,7 +120,23 @@ Hitbox.Hit:Connect(function(Humanoid, HitPart, HitboxDataBundle)
     ...
 end)
 ```
-The child ScriptSignal class of the Hitbox. It is fired whenever the Hitbox hits a Humanoid that does not have a ForceField, is not on Debounce and is not dead.
+A ScriptSignal which is fired whenever the Hitbox hits a Humanoid that is not on Debounce and is not dead while the Hitbox is active.
+### Hitbox.PartEntered
+```lua
+Hitbox.PartEntered -- ScriptSignal
+Hitbox.PartEntered:Connect(function(BasePart)
+    ...
+end)
+```
+A ScriptSignal which is fired when **any** part enters the Hitbox while the Hitbox is active.
+### Hitbox.PartLeft
+```lua
+Hitbox.PartLeft
+Hitbox.PartLeft:Connect(function(BasePart)
+    ...
+end)
+```
+A ScriptSignal which is fired when **any** part leaves the Hitbox while the Hitbox is active.
 ### Hitbox:Activate()
 ```lua
 Hitbox:Activate()

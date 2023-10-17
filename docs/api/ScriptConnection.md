@@ -6,7 +6,7 @@ A class returned by `ScriptSignal:Connect()` and `ScriptSignal:Once()`.
 ``` lua
 ScriptConnection.StateEnum -- {string: string}
 ```
-A mutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
+An immutable copy of `enum.StateEnum`. Includes `StateEnum.Paused`, `StateEnum.Active` and `StateEnum.Dead`.
 ### ScriptConnection:GetIdentifier()
 ``` lua
 local identifier = ScriptConnection:GetIdentifier() -> string
