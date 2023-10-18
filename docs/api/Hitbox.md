@@ -88,7 +88,7 @@ The orientation of the Hitbox. **Note: CopyCFrame overrides this property.**
 ```lua
 Hitbox.CopyCFrame -- BasePart
 ```
-A part which the Hitbox will copy Position, Size and Orientation from. **WARNING: Overrides orientation and all constructed paths. Does NOT override `Hitbox.Shape`**
+A part which the Hitbox will copy Position, Size and Orientation from. **WARNING: Overrides all constructed paths if not nil. Overrides Orientation, Position and Size by default (See Hitbox.CopyCFrameProperties). Does NOT override `Hitbox.Shape`**
 ### Hitbox.CopyCFrameProperties
 ```lua
 Hitbox.CopyCFrameProperties -- {CFrame = boolean, Size = boolean, Position = boolean, Orientation = boolean}
