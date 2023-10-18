@@ -12,6 +12,7 @@ local hitbox = Module.newHitbox({
     LifeTime = number or 1,
     Orientation = Vector3 or nil,
     CopyCFrame = BasePart or nil,
+    CopyCFrameProperties = {CFrame = boolean?, Position = boolean?, Size = boolean?, Orientation = boolean?} or {CFrame = true, Size = true}
     Radius = number or 3,
     Size = Vector3 or Vector3.new(3, 3, 3),
     FilterType = Enum.RaycastFilterType or Enum.RaycastFilterType.Exclude,
@@ -88,6 +89,11 @@ The orientation of the Hitbox. **Note: CopyCFrame overrides this property.**
 Hitbox.CopyCFrame -- BasePart
 ```
 A part which the Hitbox will copy Position, Size and Orientation from. **WARNING: Overrides orientation and all constructed paths. Does NOT override `Hitbox.Shape`**
+### Hitbox.CopyCFrameProperties
+```lua
+Hitbox.CopyCFrameProperties -- {CFrame = boolean, Size = boolean, Position = boolean, Orientation = boolean}
+```
+A table which determines what properties are copied over from Hitbox.CopyCFrame. Properties with nil or false are ignored and not changed by CopyCFrame. Default {CFrame = true, Size = true} **Note: If CFrame is true, Position and Size can be left as nil or false and those properties will be copied over regardless. Same for the other way around.**
 ### Hitbox.OverlapParams
 ```lua
 Hitbox.OverlapParams -- OverlapParams

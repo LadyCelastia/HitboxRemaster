@@ -236,7 +236,7 @@ local function HitCheck(self: HitboxType): ()
 				if self.CopyCFrameProperties["CFrame"] == true or self.CopyCFrameProperties["Position"] == true then
 				    self.Position = self.CopyCFrame.Position
 				end
-				if self.CopyCFrameProperties["CFrame"] == true or self.CopyCFrameProperties["Size"] == true then
+				if self.CopyCFrameProperties["Size"] == true then
 					self.Size = self.CopyCFrame.Size
 					self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
 				end
@@ -251,10 +251,17 @@ local function HitCheck(self: HitboxType): ()
 			end
 		elseif self.Shape == "Box" then
 			if typeof(self.CopyCFrame) == "Instance" and self.CopyCFrame:IsA("BasePart") then
-				self.Position = self.CopyCFrame.Position
-				self.Size = self.CopyCFrame.Size
-				self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
-				result = workspace:GetPartBoundsInBox(self.CopyCFrame.CFrame, self.CopyCFrame.Size, self.OverlapParams) or {} 
+				if self.CopyCFrameProperties["CFrame"] == true or self.CopyCFrameProperties["Position"] == true then
+					self.Position = self.CopyCFrame.Position
+				end
+				if self.CopyCFrameProperties["Size"] == true then
+					self.Size = self.CopyCFrame.Size
+					self.Radius = (self.CopyCFrame.Size.X + self.CopyCFrame.Size.Y + self.CopyCFrame.Size.Z) / 3
+				end
+				if self.CopyCFrameProperties["CFrame"] == true or self.CopyCFrameProperties["Orientation"] == true then
+					self.Orientation = self.CopyCFrame.Orientation
+				end
+				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z)), self.Size, self.OverlapParams) or {} 
 			elseif typeof(self.Orientation) == "Vector3" then
 				result = workspace:GetPartBoundsInBox(CFrame.new(self.Position) * CFrame.Angles(math.rad(self.Orientation.X), math.rad(self.Orientation.Y), math.rad(self.Orientation.Z)), self.Size, self.OverlapParams) or {}
 			else
@@ -837,7 +844,7 @@ Hitbox.new = function(Fields: {Pair<string, any>}): HitboxType
 	self.LifeTime = Fields["LifeTime"] or 1
 	self.Orientation = Fields["Orientation"]
 	self.CopyCFrame = Fields["CopyCFrame"]
-	self.CopyCFrameProperties = Fields["CopyCFrameProperties"] or {CFrame = true}}
+	self.CopyCFrameProperties = Fields["CopyCFrameProperties"] or {CFrame = true, Size = true}
 	self.OverlapParams = OverlapParams.new()
 	self.OverlapParams.FilterType = Fields["FilterType"] or Enum.RaycastFilterType.Exclude
 	self.OverlapParams.FilterDescendantsInstances = Fields["FilterDescendantsInstances"] or {}
@@ -1702,6 +1709,7 @@ export type HitboxType = typeof(Hitbox) & {
 	LifeTime: number,
 	Orientation: Vector3,
 	CopyCFrame: BasePart,
+	CopyCFrameProperties: {string: boolean},
 	OverlapParams: OverlapParams,
 	Active: boolean,
 	Radius: number,
