@@ -1,0 +1,1615 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for HitboxRemaster">
+      
+      
+        <meta name="author" content="CeIastia">
+      
+      
+        <link rel="canonical" href="https://ladycelastia.github.io/HitboxRemaster/api/Hitbox/">
+      
+      
+        <link rel="prev" href="../../examples/ZoneExample/">
+      
+      
+        <link rel="next" href="../Trajectory/">
+      
+      
+      <link rel="icon" href="../../images/code-solid.svg">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>Hitbox - HitboxRemaster</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="purple" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hitbox" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="HitboxRemaster" class="md-header__button md-logo" aria-label="HitboxRemaster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HitboxRemaster
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hitbox
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="purple" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="purple" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LadyCelastia/HitboxRemaster" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LadyCelastia/HitboxRemaster
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/HitboxExample/" class="md-tabs__link">
+          
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="HitboxRemaster" class="md-nav__button md-logo" aria-label="HitboxRemaster" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
+
+    </a>
+    HitboxRemaster
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LadyCelastia/HitboxRemaster" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LadyCelastia/HitboxRemaster
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/HitboxExample/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hitbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/ZoneExample/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Hitbox
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Hitbox
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modulenewhitboxfields-string-any" class="md-nav__link">
+    Module.newHitbox(Fields: {string: any})
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public" class="md-nav__link">
+    Public
+  </a>
+  
+    <nav class="md-nav" aria-label="Public">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hitboxshapeenum" class="md-nav__link">
+    Hitbox.ShapeEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxmodeenum" class="md-nav__link">
+    Hitbox.ModeEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxstateenum" class="md-nav__link">
+    Hitbox.StateEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxconstructionenum" class="md-nav__link">
+    Hitbox.ConstructionEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxbezierenum" class="md-nav__link">
+    Hitbox.BezierEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxserial" class="md-nav__link">
+    Hitbox.Serial
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxshape" class="md-nav__link">
+    Hitbox.Shape
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxposition" class="md-nav__link">
+    Hitbox.Position
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpierce" class="md-nav__link">
+    Hitbox.Pierce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdebounce" class="md-nav__link">
+    Hitbox.Debounce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxlifetime" class="md-nav__link">
+    Hitbox.LifeTime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxorientation" class="md-nav__link">
+    Hitbox.Orientation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxcopycframe" class="md-nav__link">
+    Hitbox.CopyCFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxcopycframeproperties" class="md-nav__link">
+    Hitbox.CopyCFrameProperties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxoverlapparams" class="md-nav__link">
+    Hitbox.OverlapParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxactive" class="md-nav__link">
+    Hitbox.Active
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxradius" class="md-nav__link">
+    Hitbox.Radius
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxsize" class="md-nav__link">
+    Hitbox.Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxtrajectory" class="md-nav__link">
+    Hitbox.Trajectory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxhit" class="md-nav__link">
+    Hitbox.Hit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpartentered" class="md-nav__link">
+    Hitbox.PartEntered
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpartleft" class="md-nav__link">
+    Hitbox.PartLeft
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxactivate" class="md-nav__link">
+    Hitbox:Activate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdeactivate" class="md-nav__link">
+    Hitbox:Deactivate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxaddignoreobject-instance" class="md-nav__link">
+    Hitbox:AddIgnore(object: Instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxremoveignoreobject-instance" class="md-nav__link">
+    Hitbox:RemoveIgnore(object: Instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetvelocity" class="md-nav__link">
+    Hitbox:GetVelocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxsetvelocity" class="md-nav__link">
+    Hitbox:SetVelocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxchangeattachmentattachment-attachment" class="md-nav__link">
+    Hitbox:ChangeAttachment(attachment: Attachment?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxishitboxbackstabpart-basepart-databundle-hitboxdatabundle-margin-number" class="md-nav__link">
+    Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxisbackstabpart-basepart-character-model-margin-number" class="md-nav__link">
+    Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetcurrentserial" class="md-nav__link">
+    Hitbox:GetCurrentSerial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetconstructionmode" class="md-nav__link">
+    Hitbox:GetConstructionMode()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetcurrentmode" class="md-nav__link">
+    Hitbox:GetCurrentMode()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxvisualize" class="md-nav__link">
+    Hitbox:Visualize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxunvisualizedonotwarn-boolean" class="md-nav__link">
+    Hitbox:Unvisualize(doNotWarn: boolean?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdestroy" class="md-nav__link">
+    Hitbox:Destroy()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#private" class="md-nav__link">
+    Private
+  </a>
+  
+    <nav class="md-nav" aria-label="Private">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_attachment" class="md-nav__link">
+    Hitbox._Attachment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_currentframe" class="md-nav__link">
+    Hitbox._CurrentFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_canwarn" class="md-nav__link">
+    Hitbox._CanWarn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_visual" class="md-nav__link">
+    Hitbox._Visual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_destroying" class="md-nav__link">
+    Hitbox._Destroying
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trajectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trajectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ZoneComponent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ZoneComponent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ScriptSignal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScriptSignal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ScriptConnection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScriptConnection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modulenewhitboxfields-string-any" class="md-nav__link">
+    Module.newHitbox(Fields: {string: any})
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public" class="md-nav__link">
+    Public
+  </a>
+  
+    <nav class="md-nav" aria-label="Public">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hitboxshapeenum" class="md-nav__link">
+    Hitbox.ShapeEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxmodeenum" class="md-nav__link">
+    Hitbox.ModeEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxstateenum" class="md-nav__link">
+    Hitbox.StateEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxconstructionenum" class="md-nav__link">
+    Hitbox.ConstructionEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxbezierenum" class="md-nav__link">
+    Hitbox.BezierEnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxserial" class="md-nav__link">
+    Hitbox.Serial
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxshape" class="md-nav__link">
+    Hitbox.Shape
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxposition" class="md-nav__link">
+    Hitbox.Position
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpierce" class="md-nav__link">
+    Hitbox.Pierce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdebounce" class="md-nav__link">
+    Hitbox.Debounce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxlifetime" class="md-nav__link">
+    Hitbox.LifeTime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxorientation" class="md-nav__link">
+    Hitbox.Orientation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxcopycframe" class="md-nav__link">
+    Hitbox.CopyCFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxcopycframeproperties" class="md-nav__link">
+    Hitbox.CopyCFrameProperties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxoverlapparams" class="md-nav__link">
+    Hitbox.OverlapParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxactive" class="md-nav__link">
+    Hitbox.Active
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxradius" class="md-nav__link">
+    Hitbox.Radius
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxsize" class="md-nav__link">
+    Hitbox.Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxtrajectory" class="md-nav__link">
+    Hitbox.Trajectory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxhit" class="md-nav__link">
+    Hitbox.Hit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpartentered" class="md-nav__link">
+    Hitbox.PartEntered
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxpartleft" class="md-nav__link">
+    Hitbox.PartLeft
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxactivate" class="md-nav__link">
+    Hitbox:Activate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdeactivate" class="md-nav__link">
+    Hitbox:Deactivate()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxaddignoreobject-instance" class="md-nav__link">
+    Hitbox:AddIgnore(object: Instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxremoveignoreobject-instance" class="md-nav__link">
+    Hitbox:RemoveIgnore(object: Instance)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetvelocity" class="md-nav__link">
+    Hitbox:GetVelocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxsetvelocity" class="md-nav__link">
+    Hitbox:SetVelocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxchangeattachmentattachment-attachment" class="md-nav__link">
+    Hitbox:ChangeAttachment(attachment: Attachment?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxishitboxbackstabpart-basepart-databundle-hitboxdatabundle-margin-number" class="md-nav__link">
+    Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxisbackstabpart-basepart-character-model-margin-number" class="md-nav__link">
+    Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetcurrentserial" class="md-nav__link">
+    Hitbox:GetCurrentSerial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetconstructionmode" class="md-nav__link">
+    Hitbox:GetConstructionMode()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxgetcurrentmode" class="md-nav__link">
+    Hitbox:GetCurrentMode()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxvisualize" class="md-nav__link">
+    Hitbox:Visualize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxunvisualizedonotwarn-boolean" class="md-nav__link">
+    Hitbox:Unvisualize(doNotWarn: boolean?)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitboxdestroy" class="md-nav__link">
+    Hitbox:Destroy()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#private" class="md-nav__link">
+    Private
+  </a>
+  
+    <nav class="md-nav" aria-label="Private">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_attachment" class="md-nav__link">
+    Hitbox._Attachment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_currentframe" class="md-nav__link">
+    Hitbox._CurrentFrame
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_canwarn" class="md-nav__link">
+    Hitbox._CanWarn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_visual" class="md-nav__link">
+    Hitbox._Visual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hitbox_destroying" class="md-nav__link">
+    Hitbox._Destroying
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="hitbox">Hitbox</h1>
+<p>The main Hitbox class returned by <code>Module.newHitbox(Fields)</code>.</p>
+<h3 id="modulenewhitboxfields-string-any">Module.newHitbox(Fields: {string: any})</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">hitbox</span> <span class="o">=</span> <span class="n">Module</span><span class="p">.</span><span class="n">newHitbox</span><span class="p">({</span>
+    <span class="n">Attachment</span> <span class="o">=</span> <span class="n">attachment</span> <span class="ow">or</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="n">Shape</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Box&quot;</span> <span class="ow">or</span> <span class="s2">&quot;Sphere&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;Box&quot;</span><span class="p">,</span>
+    <span class="n">Position</span> <span class="o">=</span> <span class="n">Vector3</span> <span class="ow">or</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">Debounce</span> <span class="o">=</span> <span class="n">number</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">Pierce</span> <span class="o">=</span> <span class="n">number</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">LifeTime</span> <span class="o">=</span> <span class="n">number</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">Orientation</span> <span class="o">=</span> <span class="n">Vector3</span> <span class="ow">or</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="n">CopyCFrame</span> <span class="o">=</span> <span class="n">BasePart</span> <span class="ow">or</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="n">CopyCFrameProperties</span> <span class="o">=</span> <span class="p">{</span><span class="n">CFrame</span> <span class="o">=</span> <span class="n">boolean</span><span class="err">?</span><span class="p">,</span> <span class="n">Position</span> <span class="o">=</span> <span class="n">boolean</span><span class="err">?</span><span class="p">,</span> <span class="n">Size</span> <span class="o">=</span> <span class="n">boolean</span><span class="err">?</span><span class="p">,</span> <span class="n">Orientation</span> <span class="o">=</span> <span class="n">boolean</span><span class="err">?</span><span class="p">}</span> <span class="ow">or</span> <span class="p">{</span><span class="n">CFrame</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">Size</span> <span class="o">=</span> <span class="kc">true</span><span class="p">}</span>
+    <span class="n">Radius</span> <span class="o">=</span> <span class="n">number</span> <span class="ow">or</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">Size</span> <span class="o">=</span> <span class="n">Vector3</span> <span class="ow">or</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="n">FilterType</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">RaycastFilterType</span> <span class="ow">or</span> <span class="n">Enum</span><span class="p">.</span><span class="n">RaycastFilterType</span><span class="p">.</span><span class="n">Exclude</span><span class="p">,</span>
+    <span class="n">FilterDescendantsInstances</span> <span class="o">=</span> <span class="p">{</span><span class="n">Instance</span><span class="p">}</span> <span class="ow">or</span> <span class="p">{},</span>
+    <span class="n">RespectCanCollide</span> <span class="o">=</span> <span class="n">boolean</span> <span class="ow">or</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="n">MaxParts</span> <span class="o">=</span> <span class="n">number</span> <span class="ow">or</span> <span class="mi">0</span>
+<span class="p">})</span> <span class="o">-&gt;</span> <span class="n">Hitbox</span>
+</code></pre></div>
+Create a new Hitbox object. Fields are optional.</p>
+<h2 id="public">Public</h2>
+<h3 id="hitboxshapeenum">Hitbox.ShapeEnum</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">ShapeEnum</span> <span class="c1">-- {string: string}</span>
+</code></pre></div>
+An immutable copy of <code>enum.Shape</code>. Includes <code>ShapeEnum.Box</code> and <code>ShapeEnum.Sphere</code>.</p>
+<h3 id="hitboxmodeenum">Hitbox.ModeEnum</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">ModeEnum</span> <span class="c1">-- {string: string}</span>
+</code></pre></div>
+An immutable copy of <code>enum.HitboxMode</code>. Includes <code>ModeEnum.None</code>, <code>ModeEnum.Attachment</code>, <code>ModeEnum.Linear</code>, <code>ModeEnum.Bezier</code>, <code>ModeEnum.Orientation</code> and <code>ModeEnum.Copying</code></p>
+<h3 id="hitboxstateenum">Hitbox.StateEnum</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">StateEnum</span> <span class="c1">-- {string: string}</span>
+</code></pre></div>
+An immutable copy of <code>enum.StateEnum</code>. Includes <code>StateEnum.Paused</code>, <code>StateEnum.Active</code> and <code>StateEnum.Dead</code>.</p>
+<h3 id="hitboxconstructionenum">Hitbox.ConstructionEnum</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">ConstructionEnum</span> <span class="c1">-- {string: string}</span>
+</code></pre></div>
+An immutable copy of <code>enum.ConstructionMode</code>. Includes <code>ConstructionEnum.None</code>, <code>ConstructionEnum.Linear</code> and <code>ConstructionEnum.Bezier</code>.</p>
+<h3 id="hitboxbezierenum">Hitbox.BezierEnum</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">BezierEnum</span> <span class="c1">-- {string: string}</span>
+</code></pre></div>
+An immutable copy of <code>enum.BezierMode</code>. Includes <code>BezierEnum.Quadratic</code> and <code>BezierEnum.Cubic</code>.</p>
+<h3 id="hitboxserial">Hitbox.Serial</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Serial</span> <span class="c1">-- number</span>
+</code></pre></div>
+A <strong>readonly</strong> number that is the Hitbox's unique serial. <strong>WARNING: Do NOT change under any circumstance.</strong></p>
+<h3 id="hitboxshape">Hitbox.Shape</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Shape</span> <span class="c1">-- string</span>
+</code></pre></div>
+The current shape of the Hitbox. Can be <code>Box</code> or <code>Sphere</code>.</p>
+<h3 id="hitboxposition">Hitbox.Position</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Position</span> <span class="c1">-- Vector3</span>
+</code></pre></div>
+The current center position of the Hitbox. <strong>Note: Any changes will be prevented if the Hitbox is currently using a bezier path.</strong></p>
+<h3 id="hitboxpierce">Hitbox.Pierce</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Pierce</span> <span class="c1">-- number</span>
+</code></pre></div>
+How many Humanoids can the Hitbox hit in total.</p>
+<h3 id="hitboxdebounce">Hitbox.Debounce</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Debounce</span> <span class="c1">-- number</span>
+</code></pre></div>
+How many seconds have to pass before the Hitbox can hit the same Humanoid again.</p>
+<h3 id="hitboxlifetime">Hitbox.LifeTime</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">LifeTime</span> <span class="c1">-- number</span>
+</code></pre></div>
+How many seconds the Hitbox has left before it automatically cleans and garbage collects itself. Only counts down while the Hitbox is activated. <strong>Note: This property does not countdown if the Hitbox is currently using a bezier path. The Hitbox will clean itself when it reaches the end of the bezier path instead.</strong></p>
+<h3 id="hitboxorientation">Hitbox.Orientation</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Orientation</span> <span class="c1">-- Vector3</span>
+</code></pre></div>
+The orientation of the Hitbox. <strong>Note: CopyCFrame overrides this property.</strong></p>
+<h3 id="hitboxcopycframe">Hitbox.CopyCFrame</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">CopyCFrame</span> <span class="c1">-- BasePart</span>
+</code></pre></div>
+A part which the Hitbox will copy Position, Size and Orientation from. <strong>WARNING: Overrides all constructed paths if not nil. Overrides Orientation, Position and Size by default (See Hitbox.CopyCFrameProperties). Does NOT override <code>Hitbox.Shape</code></strong></p>
+<h3 id="hitboxcopycframeproperties">Hitbox.CopyCFrameProperties</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">CopyCFrameProperties</span> <span class="c1">-- {CFrame = boolean, Size = boolean, Position = boolean, Orientation = boolean}</span>
+</code></pre></div>
+A table which determines what properties are copied over from Hitbox.CopyCFrame. Properties with nil or false are ignored and not changed by CopyCFrame. Default {CFrame = true, Size = true} <strong>Note: If CFrame is true, Position and Size can be left as nil or false and those properties will be copied over regardless. Same for the other way around.</strong></p>
+<h3 id="hitboxoverlapparams">Hitbox.OverlapParams</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">OverlapParams</span> <span class="c1">-- OverlapParams</span>
+</code></pre></div>
+The <code>OverlapParams</code> that's used for spatial query.</p>
+<h3 id="hitboxactive">Hitbox.Active</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Active</span> <span class="c1">-- boolean</span>
+</code></pre></div>
+A <strong>readonly</strong> boolean that displays whether the Hitbox is currently active or not. <strong>Note: You should change this with <code>Hitbox:Activate()</code> and <code>Hitbox:Deactivate()</code> instead.</strong></p>
+<h3 id="hitboxradius">Hitbox.Radius</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Radius</span> <span class="c1">-- number</span>
+</code></pre></div>
+The radius of the Hitbox. Used if <code>Hitbox.Shape</code> is <code>Sphere</code>. <strong>Note: CopyCFrame overrides this property.</strong></p>
+<h3 id="hitboxsize">Hitbox.Size</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Size</span> <span class="c1">-- Vector3</span>
+</code></pre></div>
+The size of the Hitbox. Used if <code>Hitbox.Shape</code> is <code>Box</code>. <strong>Note: CopyCFrame overrides this property.</strong></p>
+<h3 id="hitboxtrajectory">Hitbox.Trajectory</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Trajectory</span> <span class="c1">-- Trajectory</span>
+</code></pre></div>
+The child Trajectory class of the Hitbox. Used for path construction.</p>
+<h3 id="hitboxhit">Hitbox.Hit</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">Hit</span> <span class="c1">-- ScriptSignal</span>
+<span class="n">Hitbox</span><span class="p">.</span><span class="n">Hit</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">Humanoid</span><span class="p">,</span> <span class="n">HitPart</span><span class="p">,</span> <span class="n">HitboxDataBundle</span><span class="p">)</span>
+    <span class="p">...</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+A ScriptSignal which is fired whenever the Hitbox hits a Humanoid that is not on Debounce and is not dead while the Hitbox is active.</p>
+<h3 id="hitboxpartentered">Hitbox.PartEntered</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">PartEntered</span> <span class="c1">-- ScriptSignal</span>
+<span class="n">Hitbox</span><span class="p">.</span><span class="n">PartEntered</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">BasePart</span><span class="p">)</span>
+    <span class="p">...</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+A ScriptSignal which is fired when <strong>any</strong> part enters the Hitbox while the Hitbox is active.</p>
+<h3 id="hitboxpartleft">Hitbox.PartLeft</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">PartLeft</span>
+<span class="n">Hitbox</span><span class="p">.</span><span class="n">PartLeft</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">BasePart</span><span class="p">)</span>
+    <span class="p">...</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+A ScriptSignal which is fired when <strong>any</strong> part leaves the Hitbox while the Hitbox is active.</p>
+<h3 id="hitboxactivate">Hitbox:Activate()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">:</span><span class="n">Activate</span><span class="p">()</span>
+</code></pre></div>
+Activates the Hitbox. <strong>Note: When a new Hitbox is created, it is deactivated by default. You need to activate it after configuration.</strong></p>
+<h3 id="hitboxdeactivate">Hitbox:Deactivate()</h3>
+<p><div class="highlight"><pre><span></span><code>Hitbox:Deactivate()
+</code></pre></div>
+Deactivates the Hitbox, pausing all operations.</p>
+<h3 id="hitboxaddignoreobject-instance">Hitbox:AddIgnore(object: Instance)</h3>
+<p><div class="highlight"><pre><span></span><code>local success = Hitbox:AddIgnore(game.Players.Player1.Character) -&gt; boolean
+</code></pre></div>
+Add <code>object</code> to FilterDescendentsInstances table of <code>OverlapParams</code>. Returns boolean Success.</p>
+<h3 id="hitboxremoveignoreobject-instance">Hitbox:RemoveIgnore(object: Instance)</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numOfItemsRemoved</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">RemoveIgnore</span><span class="p">(</span><span class="n">game</span><span class="p">.</span><span class="n">Players</span><span class="p">.</span><span class="n">Player1</span><span class="p">.</span><span class="n">Character</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">number</span>
+</code></pre></div>
+Remove <code>object</code> from FilterDescendentsInstances table of <code>OverlapParams</code>. Returns number NumberOfItemsRemoved. **Note: The returned number is 0 on an unsuccessful remove, 1 or more on a successful remove.</p>
+<h3 id="hitboxgetvelocity">Hitbox:GetVelocity()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">velocity</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">GetVelocity</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">number</span>
+</code></pre></div>
+Returns the Velocity of the Hitbox's constructed path.</p>
+<h3 id="hitboxsetvelocity">Hitbox:SetVelocity()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">:</span><span class="n">SetVelocity</span><span class="p">(</span><span class="n">velocity</span><span class="p">:</span> <span class="n">number</span><span class="p">)</span>
+</code></pre></div>
+Sets the Velocity of the Hitbox's constructed path to <code>velocity</code>.</p>
+<h3 id="hitboxchangeattachmentattachment-attachment">Hitbox:ChangeAttachment(attachment: Attachment?)</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">:</span><span class="n">ChangeAttachment</span><span class="p">(</span><span class="n">attachment</span><span class="p">)</span>
+</code></pre></div>
+Changes the Hitbox's Attachment to <code>attachment</code>. If <code>attachment</code> is nil, remove Attachment from Hitbox.</p>
+<h3 id="hitboxishitboxbackstabpart-basepart-databundle-hitboxdatabundle-margin-number">Hitbox:IsHitboxBackstab(Part: BasePart, DataBundle: HitboxDataBundle, Margin: number?)</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">isBackstab</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">IsHitboxBackstab</span><span class="p">(</span><span class="n">HitPart</span><span class="p">,</span> <span class="n">HitboxDataBundle</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">boolean</span>
+</code></pre></div>
+Determine if the data described by HitboxDataBundle is a backstab on HitPart. Returns boolean. Margin is an optional number ranging from 0 to 0.5, which determines how lenient the backstab detection is. 0.5 would allow for side-stabs to count as backstabs while 0.1 would require basically perfect alignment. Defaults to 0.32. <strong>Note: The detection position originates from the Hitbox's recorded center position.</strong></p>
+<h3 id="hitboxisbackstabpart-basepart-character-model-margin-number">Hitbox:IsBackstab(Part: BasePart, Character: Model, Margin: number?)</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">isBackstab</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">IsBackstab</span><span class="p">(</span><span class="n">Part</span><span class="p">,</span> <span class="n">Character</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">boolean</span>
+</code></pre></div>
+Determine if <code>Character</code> backstabs <code>Part</code>. Returns boolean. Margin is an optional number ranging from 0 to 0.5, which determines how lenient the backstab detection is. 0.5 would allow for side-stabs to count as backstabs while 0.1 would require basically perfect alignment. Defaults to 0.32. <strong>Note: The detection position originates from the provided character's root. Recommended to use this over Hitbox:IsHitboxBackstab() if used in tools of a character.</strong></p>
+<h3 id="hitboxgetcurrentserial">Hitbox:GetCurrentSerial()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">highestSerial</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">GetCurrentSerial</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">number</span>
+</code></pre></div>
+Get the currently highest serial. Returns number.</p>
+<h3 id="hitboxgetconstructionmode">Hitbox:GetConstructionMode()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">GetConstructionMode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">string</span>
+</code></pre></div>
+Returns the Hitbox's Trajectory's ConstructionMode.</p>
+<h3 id="hitboxgetcurrentmode">Hitbox:GetCurrentMode()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">GetCurrentMode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">string</span>
+</code></pre></div>
+Get the current behavior of the Hitbox. See <code>Hitbox.ModeEnum</code>.</p>
+<h3 id="hitboxvisualize">Hitbox:Visualize()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">part</span> <span class="o">=</span> <span class="n">Hitbox</span><span class="p">:</span><span class="n">Visualize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">BasePart</span> <span class="ow">or</span> <span class="kc">nil</span>
+</code></pre></div>
+Visualizes the Hitbox and returns the visualization part if the Hitbox wasn't already visualizing. <strong>WARNING: The visualization only updates once every 5 frames and is UNOPTIMIZED. This should only be used for testing purposes.</strong></p>
+<h3 id="hitboxunvisualizedonotwarn-boolean">Hitbox:Unvisualize(doNotWarn: boolean?)</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">:</span><span class="n">Unvisualize</span><span class="p">()</span>
+</code></pre></div>
+Unvisualizes the Hitbox. Throws a warn if <code>doNotWarn</code> isn't <code>true</code> and the Hitbox wasn't visualizing.</p>
+<h3 id="hitboxdestroy">Hitbox:Destroy()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">:</span><span class="n">Destroy</span><span class="p">()</span>
+</code></pre></div>
+Immediately clean and garbage collect Hitbox and all its children. Hitbox should be dereferenced after this operation.</p>
+<h2 id="private">Private</h2>
+<blockquote>
+<p>Note: Private variables, methods and functions should not be used unless you know what you're doing.</p>
+</blockquote>
+<h3 id="hitbox_attachment">Hitbox._Attachment</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">_Attachment</span> <span class="c1">-- Attachment or nil</span>
+</code></pre></div>
+Internal store for the Hitbox's Attachment, if one exists. <strong>Note: You should use <code>Hitbox:ChangeAttachment(attachment)</code> instead.</strong></p>
+<h3 id="hitbox_currentframe">Hitbox._CurrentFrame</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">_CurrentFrame</span> <span class="c1">-- number</span>
+</code></pre></div>
+The current frame of the Hitbox in the Hitbox's frame cycle. <strong>Note: Not strictly readonly, but it's a good idea to keep this readonly.</strong></p>
+<h3 id="hitbox_canwarn">Hitbox._CanWarn</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">_CanWarn</span> <span class="c1">-- boolean</span>
+</code></pre></div>
+An internal variable that acts as throttle to prevent console spam.</p>
+<h3 id="hitbox_visual">Hitbox._Visual</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">_Visual</span> <span class="c1">-- BasePart</span>
+</code></pre></div>
+The part used for the Hitbox's visualization. <strong>WARNING: STRICTLY readonly. Use <code>Hitbox:Visualize()</code> and <code>Hitbox:Unvisualize()</code> instead.</strong></p>
+<h3 id="hitbox_destroying">Hitbox._Destroying</h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">Hitbox</span><span class="p">.</span><span class="n">_Destroying</span> <span class="c1">-- boolean</span>
+</code></pre></div>
+Whether the Hitbox is being garbage collected currently or not. <strong>WARNINNG: Readonly. The Hitbox should be dereferenced if this value is <code>true</code>.</strong></p>
+<p><strong>The main enum is intended to be completely private. You are not meant to access it.</strong></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/LadyCelastia" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@celastia6157" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.roblox.com/users/171260663/profile" target="_blank" rel="noopener" title="www.roblox.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96v352c0 17.7 14.3 32 32 32s32-14.3 32-32V320h95.3l102.5 146.4c10.1 14.5 30.1 18 44.6 7.9s18-30.1 7.9-44.6l-84.2-120.2C282.8 288.1 320 236.4 320 176c0-79.5-64.5-144-144-144H64zm112 224H64V96h112c44.2 0 80 35.8 80 80s-35.8 80-80 80z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>
