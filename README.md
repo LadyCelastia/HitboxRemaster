@@ -1,13 +1,17 @@
 # HitboxRemaster
 Dynamic Hitboxes &amp; Static Zones
 
-Current version: Beta v1.0.2b
+Current version: Beta v1.1.1
 
 For details, please go to https://ladycelastia.github.io/HitboxRemaster
 
 -------------
 
 Change logs
+
+v1.1.1: (18/10/2023)
+- New Hitbox property: CopyCFrameProperties. Determines what properties are copied over from Hitbox.CopyCFrame. Defaults to CFrame and Size, and is backward compatible. (issue #3)
+- API updated.
 
 v1.1: (17/10/2023)
 - Completely overhauled types, works with Roblox Studio intellisense now.

@@ -2,7 +2,7 @@
 	LadyCelestia 9/23/2023
 	A complete overhaul of HitboxMaster.
 
-	Version: 1.1 (17/10/2023)
+	Version: 1.1.1 (18/10/2023)
 --]]
 
 --[[

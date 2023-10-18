@@ -21,7 +21,6 @@ Both Studio and VSCode:
 Copy the [code of HitboxRemaster](https://github.com/LadyCelastia/HitboxRemaster/blob/main/src/init.lua) into a ModuleScript, then require the ModuleScript on the Script or LocalScript you want to use it in.
 
 roblox-ts:
-
 gg
 
 
