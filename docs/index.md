@@ -8,6 +8,7 @@ HitboxRemaster is a stand-alone ModuleScript that provides easy and performant d
 - **Powerful** - Libraries like Trajectory and Metafunctions to enable advanced use-cases.
 - **Customizable** - Customize the behavior of individual Hitboxes and Zones with properties and methods.
 - **Performant** - Blazingly-fast to run and use. (Details in (root)/Benchmark)
+- **Object-oriented** - Everything in this module are objects, enabling compatibility with different programming paradigms.
 - **Memory-proof** - Automatic garbage-collect operations. Manual garbage-collect can be initiated on every class with simple methods.
 - **Replication** - Fully usable on both server and client. (**WARNING:** The Hitbox and Zone serials may overlap across server and client. You need to handle such scenarios yourself)
 
